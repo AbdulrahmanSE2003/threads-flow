@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import RegisterForm from "./_components/RegisterForm";
 import Image from "next/image";
 
-const page = async () => {
+const RegisterPage = async () => {
   const session = await getSession();
   if (session) redirect("/feed");
 
@@ -27,4 +27,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default RegisterPage;
