@@ -1,7 +1,4 @@
 "use server";
-
-import { FormState } from "@/types/auth";
-
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
@@ -13,9 +10,11 @@ export const registerAction = async (
   prevState: FormState,
   formData: FormData,
 ): Promise<FormState> => {
-  // Step 1: Extract raw data
   const raw = {
-    // you know what goes here
+    displayName: formData.get("displayName"),
+    username: formData.get("username"),
+    email: formData.get("email"),
+    password: formData.get("password"),
   };
 
   // Step 2: Server-side validation
@@ -24,54 +23,55 @@ export const registerAction = async (
     return { errors: result.error.flatten().fieldErrors };
   }
 
-  // Step 3: Check duplicates in DB
-  // check email exists
-  // check username exists
+  try {
+    // Step 3: Check duplicates in DB
+    // check email exists
+    const existingEmail = await prisma.user.findUnique({
+      where: { email: result.data.email },
+    });
 
-  // Step 4: Hash password
+    if (existingEmail) {
+      return {
+        errors: { general: ["Email already in use"] },
+      };
+    }
 
-  // Step 5: Create user in DB
-  // prisma.user.create({ data: { ... } })
+    // check username exists
+    const existingUsername = await prisma.user.findUnique({
+      where: { username: result.data.username },
+    });
 
-  // Step 6: Create session
-  // setSession expects: { sub, username, displayName }
+    if (existingUsername)
+      return {
+        errors: { general: ["This username is taken"] },
+      };
 
-  // Step 7: Redirect
-  redirect("/feed");
-};
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db/prisma";
-import { hashPassword } from "@/lib/auth/password";
-import { setSession } from "@/lib/auth/session";
-import { RegisterSchema } from "@/lib/validations/auth.schema";
-import { FormState } from "@/types/auth";
+    // Step 4: Hash password
+    const hashedPassword = await hashPassword(result.data.password);
 
-export const registerAction = async (
-  prevState: FormState,
-  formData: FormData,
-): Promise<FormState> => {
-  // Step 1: Extract raw data
-  const raw = {
-    // you know what goes here
-  };
+    // Step 5: Create user in DB
+    const user = await prisma.user.create({
+      data: {
+        displayName: result.data.displayName,
+        username: result.data.username,
+        email: result.data.email,
+        passwordHash: hashedPassword,
+      },
+    });
 
-  // Step 2: Server-side validation
-  const result = RegisterSchema.safeParse(raw);
-  if (!result.success) {
-    return { errors: result.error.flatten().fieldErrors };
+    // Step 6: Create session
+    const sessionPayLoad = {
+      sub: user.id,
+      username: user.username,
+      displayName: user.displayName,
+    };
+    await setSession(sessionPayLoad);
+  } catch (error) {
+    console.error(error);
+    return {
+      errors: { general: ["Something went wrong. Please try again."] },
+    };
   }
-
-  // Step 3: Check duplicates in DB
-  // check email exists
-  // check username exists
-
-  // Step 4: Hash password
-
-  // Step 5: Create user in DB
-  // prisma.user.create({ data: { ... } })
-
-  // Step 6: Create session
-  // setSession expects: { sub, username, displayName }
 
   // Step 7: Redirect
   redirect("/feed");

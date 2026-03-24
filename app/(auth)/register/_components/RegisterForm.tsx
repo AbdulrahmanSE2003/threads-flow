@@ -74,6 +74,12 @@ const RegisterForm = () => {
       {state?.errors?.password && (
         <p className="text-red-500 text-xs">{state.errors.password[0]}</p>
       )}
+
+      {state?.errors?.general && (
+        <div className="w-3/5 bg-red-500/10 border border-red-500/50 px-4 py-3 rounded-xl">
+          <p className="text-red-400 text-sm">{state.errors.general[0]}</p>
+        </div>
+      )}
       <button
         type="submit"
         disabled={isPending}
