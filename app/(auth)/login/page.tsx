@@ -1,12 +1,7 @@
-import { getSession } from "@/lib/auth/session";
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "./_components/LoginForm";
 
 const LoginPage = async () => {
-  const session = await getSession();
-  if (session) redirect("/feed");
-
   return (
     <div className="min-h-screen flex items-center justify-center text-foreground bg-background">
       <div className="absolute max-md:hidden -left-20 right-0 -top-24 h-100">
