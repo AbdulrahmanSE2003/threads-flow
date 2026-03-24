@@ -25,11 +25,11 @@ interface PostCardProps {
 
 const PostCard = ({ author, content, images, timestamp }: PostCardProps) => {
   return (
-    <div className="w-full py-4 px-4 border-b">
+    <div className="w-full py-4 px-4 border-b border-border">
       <div className="flex gap-3">
         {/* Left Side: Avatar & Line */}
         <div className="flex flex-col items-center">
-          <div className="relative size-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-800">
+          <div className="relative size-10 rounded-full overflow-hidden border-b border-border">
             <Image
               src={avatar}
               alt={author.name}
@@ -41,9 +41,9 @@ const PostCard = ({ author, content, images, timestamp }: PostCardProps) => {
         </div>
 
         {/* Right Side: Content */}
-        <div className="flex flex-col gap-1 w-full">
+        <div className="flex flex-col gap-1 text-foreground/70 w-full">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 text-foreground/70">
               <span className="font-bold text-sm hover:underline cursor-pointer">
                 {author.username}
               </span>
@@ -61,52 +61,43 @@ const PostCard = ({ author, content, images, timestamp }: PostCardProps) => {
 
           {/* Images Grid/Carousel Preview */}
           {images && images.length > 0 && (
-            <div className="flex gap-3 overflow-x-auto hideScroll py-2 snap-x">
-              {[post1, post2, post3].map((img, index) => (
-                <div
-                  key={index}
-                  className="relative min-w-70 aspect-4/5 md:min-w-100 rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 snap-center"
-                >
-                  <Image
-                    src={img}
-                    alt={`Post image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            <div className="relative w-full mt-3">
+              <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 hideScroll">
+                {[post1, post2, post3].map((img, index) => (
+                  <div
+                    key={index}
+                    className="relative flex-none w-3/5 aspect-4/5 rounded-2xl overflow-hidden snap-start"
+                  >
+                    <Image
+                      src={img}
+                      alt={`Post image ${index + 1}`}
+                      fill
+                      className={"object-cover"}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
           {/* Interaction Buttons */}
           <div className="flex items-center gap-4 mt-2 text-neutral-900 dark:text-neutral-100 [&_button]:cursor-pointer">
-            <button className="hover:scale-110 transition-transform">
+            <button className=" flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full">
               <Heart size={20} />
+              <span className={`text-xs font-normal `}>127</span>
             </button>
-            <button className="hover:scale-110 transition-transform">
+            <button className=" flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full">
               <MessageCircle size={20} />
+              <span className={`text-xs font-normal `}>127</span>
             </button>
-            <button className="hover:scale-110 transition-transform">
+            <button className=" flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full">
               <Repeat2 size={20} />
+              <span className={`text-xs font-normal `}>127</span>
             </button>
-            <button className="hover:scale-110 transition-transform">
+            <button className=" flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full">
               <Send size={20} />
+              <span className={`text-xs font-normal `}>127</span>
             </button>
-          </div>
-
-          {/* Stats */}
-          <div className="flex items-center gap-2 mt-2">
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="size-4 rounded-full border-2 border-white dark:border-black bg-neutral-300 dark:bg-neutral-700"
-                />
-              ))}
-            </div>
-            <span className="text-neutral-500 text-xs">
-              12 replies · 45 likes
-            </span>
           </div>
         </div>
       </div>
