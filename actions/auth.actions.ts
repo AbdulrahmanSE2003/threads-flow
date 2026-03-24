@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { comparePassword, hashPassword } from "@/lib/auth/password";
-import { setSession } from "@/lib/auth/session";
+import { clearSession, setSession } from "@/lib/auth/session";
 import { LoginSchema, RegisterSchema } from "@/lib/validations/auth.schema";
 import { FormState } from "@/types/auth";
 
@@ -126,4 +126,9 @@ export const loginAction = async (prevState: FormState, formData: FormData) => {
   }
 
   redirect("/feed");
+};
+
+export const logoutAction = async () => {
+  await clearSession();
+  redirect("/login");
 };
