@@ -32,65 +32,82 @@ const RegisterForm = () => {
   return (
     <form
       action={formAction}
-      className={`flex flex-col gap-3 justify-center items-center`}
+      className="flex flex-col gap-3 justify-center items-center"
     >
       <Input
-        className="w-3/5"
+        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
         placeholder="Enter your display name"
         type="text"
         name="displayName"
         id="displayName"
       />
       {state?.errors?.displayName && (
-        <p className="text-red-500 text-xs">{state.errors.displayName[0]}</p>
+        <p className="text-red-500 dark:text-red-400 text-xs">
+          {state.errors.displayName[0]}
+        </p>
       )}
+
       <Input
-        className="w-3/5"
+        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
         placeholder="Enter your user name"
         type="text"
         name="username"
         id="username"
       />
       {state?.errors?.username && (
-        <p className="text-red-500 text-xs">{state.errors.username[0]}</p>
+        <p className="text-red-500 dark:text-red-400 text-xs">
+          {state.errors.username[0]}
+        </p>
       )}
+
       <Input
-        className="w-3/5"
+        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
         placeholder="Enter your email"
         type="email"
         name="email"
         id="email"
       />
       {state?.errors?.email && (
-        <p className="text-red-500 text-xs">{state.errors.email[0]}</p>
+        <p className="text-red-500 dark:text-red-400 text-xs">
+          {state.errors.email[0]}
+        </p>
       )}
+
       <Input
-        className="w-3/5"
+        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
         placeholder="Enter your password"
         type="password"
         name="password"
         id="password"
       />
       {state?.errors?.password && (
-        <p className="text-red-500 text-xs">{state.errors.password[0]}</p>
+        <p className="text-red-500 dark:text-red-400 text-xs">
+          {state.errors.password[0]}
+        </p>
       )}
 
       {state?.errors?.general && (
         <div className="w-3/5 bg-red-500/10 border border-red-500/50 px-4 py-3 rounded-xl">
-          <p className="text-red-400 text-sm">{state.errors.general[0]}</p>
+          <p className="text-red-600 dark:text-red-400 text-sm font-medium">
+            {state.errors.general[0]}
+          </p>
         </div>
       )}
+
       <button
         type="submit"
         disabled={isPending}
-        className={`bg-foreground/95 hover:bg-foreground w-3/5 p-5 rounded-xl text-white transition-colors duration-300 cursor-pointer disabled:bg-foreground/50 disabled:pointer-events-none disabled:cursor-not-allowed`}
+        className="bg-black dark:bg-white text-white dark:text-black hover:opacity-90 w-3/5 p-5 rounded-xl transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isPending ? "Signing Up..." : "Sign Up"}{" "}
+        {isPending ? "Signing Up..." : "Sign Up"}
       </button>
 
-      <p className={`text-neutral-400 `}>
+      <p className="text-neutral-500 dark:text-neutral-400 text-sm">
         You have an account already!{" "}
-        <Link className={`text-foreground`} href={"/login"}>
+        <Link
+          className="text-black dark:text-white font-semibold hover:underline"
+          href="/login"
+        >
           Login
         </Link>
       </p>

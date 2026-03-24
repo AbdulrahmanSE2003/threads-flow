@@ -1,9 +1,9 @@
 import { getSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
-import LoginForm from "./_components/LoginForm";
 import Image from "next/image";
+import LoginForm from "./_components/LoginForm";
 
-const RegisterPage = async () => {
+const LoginPage = async () => {
   const session = await getSession();
   if (session) redirect("/feed");
 
@@ -17,9 +17,13 @@ const RegisterPage = async () => {
         />
       </div>
       <div className="w-full max-w-2xl px-6 z-10 md:mt-20">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold">Create Threads account</h1>
-          <p className="text-neutral-400 mt-2">Join the conversation</p>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
+            Welcome back
+          </h1>
+          <p className="text-neutral-500 dark:text-neutral-400 mt-2">
+            See what&apos;s happening in your circles.
+          </p>
         </div>
         <LoginForm />
       </div>
@@ -27,4 +31,4 @@ const RegisterPage = async () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
