@@ -1,15 +1,32 @@
 import { Plus } from "lucide-react";
 import AddPost from "./_components/AddPost";
+import PostCard from "./_components/PostCard";
 
 export default async function FeedPage() {
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-      <div
-        className={`mt-12 bg-main border border-zinc-600/50 min-h-screen w-2xl rounded-3xl flex flex-col`}
-      >
+      <div className="mt-12 bg-main border border-border h-[calc(100vh-3rem)] w-2xl rounded-t-3xl flex flex-col overflow-y-auto overflow-x-hidden snap-y">
         {/* Add Post */}
         <AddPost />
+        {/* Posts Feed - Scrollable area */}
+        <div className="flex-1  ">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <PostCard
+              key={i}
+              author={{
+                name: "Abdulrahman Saad",
+                username: "abdo7.dev",
+                avatar: "/avatar.png",
+              }}
+              content="بهاي الثريد رح احكيلكم قصتي مع نظام غير طريقة تفكيري تجاه اي backend system... البرمجة هندسة بتمنع الكارثة قبل ما تصير. 🛠️✨"
+              images={["/post-1.png", "/post-2.png", "/post-3.png"]}
+              timestamp="1h"
+            />
+          ))}
+        </div>
       </div>
+
+      {/* Posts Feed */}
 
       {/* Create post button */}
       <button
