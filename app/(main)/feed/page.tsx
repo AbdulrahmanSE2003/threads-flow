@@ -11,9 +11,15 @@ export default async function FeedPage() {
         {/* Add Post */}
         <AddPost />
         {/* Posts Feed - Scrollable area */}
-        <Suspense fallback={<PostSkeleton />}>
-          {/* <PostFeed /> */}
-          <PostSkeleton />
+        <Suspense
+          fallback={
+            <div>
+              <PostSkeleton />
+              <PostSkeleton />
+            </div>
+          }
+        >
+          <PostFeed />
         </Suspense>
       </div>
 

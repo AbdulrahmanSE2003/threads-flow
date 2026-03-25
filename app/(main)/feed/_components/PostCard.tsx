@@ -1,36 +1,23 @@
-import PostInteraction from "./PostInteraction";
-import { MoreHorizontal } from "lucide-react";
+import { Heart, MoreHorizontal } from "lucide-react";
 import Avatar from "@/app/_components/Avatar";
-
-import post1 from "@/public/post-1.png";
-import post2 from "@/public/post-2.png";
-import post3 from "@/public/post-3.png";
-import { Post } from "@prisma/client";
 import Image from "next/image";
 import { formatTimestamp } from "@/lib/utils";
+import { PostWithDetails } from "@/types/post";
 
-// just for testing
-// interface PostCardProps {
-//   author: {
-//     name: string;
-//     username: string;
-//     avatar: string;
-//   };
-//   content: string;
-//   images?: string[];
-//   timestamp: string;
-// }
+interface PostCardProps {
+  post: PostWithDetails;
+  currentUserId: string | null;
+}
 
-const images = [post1, post2, post3];
-
-const PostCard = (post: Post) => {
+const PostCard = ({ post, currentUserId }: PostCardProps) => {
   // TODO destructure post data
-  const {} = post;
+  console.log(post);
+  const images = post.images;
   return (
     <div className="w-full py-4 px-4 border-b border-border">
       <div className="flex gap-3">
         {/* Left Side: Avatar */}
-        <Avatar />
+        <Avatar avatarSrc={post.author.avatarUrl} />
 
         {/* Right Side: Content */}
         <div className="flex flex-col gap-1 text-foreground/70 w-full">
@@ -38,10 +25,10 @@ const PostCard = (post: Post) => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-1 text-foreground/70">
               <span className="font-bold text-sm hover:underline cursor-pointer">
-                {"adam_759"}
+                {post.author.displayName}
               </span>
               <span className="text-neutral-500 text-xs">
-                {formatTimestamp("2026-03-05")}
+                {formatTimestamp(post.createdAt)}
               </span>
             </div>
             {/* TODO: post menu */}
@@ -52,9 +39,7 @@ const PostCard = (post: Post) => {
 
           {/* Post Text */}
           <p className="text-[15px] leading-relaxed text-neutral-900 dark:text-neutral-100 whitespace-pre-wrap">
-            {
-              "Claude is the bes ai model , i hope it gives me a free subscription 😅"
-            }
+            {post.caption}
           </p>
 
           {/* Images Grid/Carousel Preview */}
@@ -79,7 +64,14 @@ const PostCard = (post: Post) => {
           )}
 
           {/* Interaction Buttons */}
-          <PostInteraction />
+          <div className="flex items-center gap-4 mt-2 text-background/70 [&_button]:cursor-pointer [&_button]:active:scale-75 [&_button]:duration-500">
+            <button className=" flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full">
+              <Heart size={20} />
+              <span className={`text-xs font-normal `}>
+                {post._count.likes}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

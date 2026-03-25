@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "static.cdninstagram.com",
+        hostname: "imgs.search.brave.com",
         port: "",
         pathname: "/**",
       },

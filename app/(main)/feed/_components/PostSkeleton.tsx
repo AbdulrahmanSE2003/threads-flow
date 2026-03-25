@@ -1,7 +1,3 @@
-import Avatar from "@/app/_components/Avatar";
-import { formatTimestamp } from "@/lib/utils";
-import { MoreHorizontal } from "lucide-react";
-import PostInteraction from "./PostInteraction";
 import { Skeleton } from "@/app/_components/ui/Skeleton";
 
 const PostSkeleton = () => {

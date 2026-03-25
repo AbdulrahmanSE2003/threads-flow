@@ -3,7 +3,7 @@ import Image from "next/image";
 import avatar from "@/public/avatar.png";
 
 // TODO: Make src required
-const Avatar = ({ avatarSrc }: { avatarSrc?: string }) => {
+const Avatar = ({ avatarSrc }: { avatarSrc?: string | null }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="relative size-10 rounded-full overflow-hidden">
