@@ -1,6 +1,8 @@
 import { Plus } from "lucide-react";
+import { Suspense } from "react";
 import AddPost from "./_components/AddPost";
-import PostCard from "./_components/PostCard";
+import PostFeed from "./_components/PostFeed";
+import PostSkeleton from "./_components/PostSkeleton";
 
 export default async function FeedPage() {
   return (
@@ -9,24 +11,11 @@ export default async function FeedPage() {
         {/* Add Post */}
         <AddPost />
         {/* Posts Feed - Scrollable area */}
-        <div className="flex-1">
-          {[1, 2, 3, 4].map((i) => (
-            <PostCard
-              key={i}
-              author={{
-                name: "Abdulrahman Saad",
-                username: "abdo7.dev",
-                avatar: "/avatar.png",
-              }}
-              content="بهاي الثريد رح احكيلكم قصتي مع نظام غير طريقة تفكيري تجاه اي backend system... البرمجة هندسة بتمنع الكارثة قبل ما تصير. 🛠️✨"
-              images={["/post-1.png", "/post-2.png", "/post-3.png"]}
-              timestamp="1h"
-            />
-          ))}
-        </div>
+        <Suspense fallback={<PostSkeleton />}>
+          {/* <PostFeed /> */}
+          <PostSkeleton />
+        </Suspense>
       </div>
-
-      {/* Posts Feed */}
 
       {/* Create post button */}
       <button

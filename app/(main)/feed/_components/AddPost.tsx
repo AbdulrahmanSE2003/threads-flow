@@ -1,10 +1,12 @@
+import Avatar from "@/app/_components/Avatar";
+
 const AddPost = () => {
   return (
     <div
-      className={`flex justify-start items-center gap-4 border-b border-border p-6 pb-4`}
+      className={`flex justify-start items-center gap-4 border-b border-border p-4`}
     >
       {/* NOTE: Image goes here */}
-      <div className={`rounded-full bg-amber-500 w-9 h-9`} />
+      <Avatar />
       <input
         className={`grow focus:outline-none text-sm`}
         type="text"
