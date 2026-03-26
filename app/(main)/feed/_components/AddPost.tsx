@@ -1,9 +1,13 @@
 import Avatar from "@/app/_components/Avatar";
+import { cn } from "@/lib/utils";
 
-const AddPost = () => {
+const AddPost = ({ className = "" }: { className?: string }) => {
   return (
     <div
-      className={`flex justify-start items-center gap-4 border-b border-border p-4`}
+      className={cn(
+        `flex justify-start items-center gap-4 border-b border-border p-4`,
+        className,
+      )}
     >
       {/* NOTE: Image goes here */}
       <Avatar />
