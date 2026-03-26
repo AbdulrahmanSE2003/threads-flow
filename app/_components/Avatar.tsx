@@ -6,12 +6,12 @@ import avatar from "@/public/avatar.png";
 const Avatar = ({ avatarSrc }: { avatarSrc?: string | null }) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="relative size-10 rounded-full overflow-hidden">
+      <div className="relative size-12 rounded-full overflow-hidden">
         <Image
           src={avatarSrc || avatar}
           alt={"adamJohn"}
-          width={40}
-          height={40}
+          width={48}
+          height={48}
           className="object-cover"
         />
       </div>

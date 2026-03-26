@@ -43,7 +43,7 @@ const LikeButton = ({
         disabled={isPending}
         onClick={handleLike}
         className={cn(
-          "flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-900/70 p-2 rounded-full",
+          "flex justify-center items-center gap-1 text-foreground/70 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-2 rounded-full",
           optimistic.isLiked && "text-red-500/70",
         )}
       >

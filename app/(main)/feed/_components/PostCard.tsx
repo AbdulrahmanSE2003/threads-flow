@@ -25,16 +25,16 @@ const PostCard = ({ post, currentUserId }: PostCardProps) => {
         <div className="flex flex-col gap-1 text-foreground/70 w-full">
           {/* Username & date */}
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1 text-foreground/70">
+            <div className="flex items-center gap-1 text-foreground text-sm tracking-tighter">
               <span className="font-bold text-sm hover:underline cursor-pointer">
                 {author.displayName}
               </span>
-              <span className="text-neutral-500 text-xs">
+              <span className="text-neutral-500 text-sm font-extralight ">
                 {formatTimestamp(createdAt)}
               </span>
             </div>
             {/* TODO: post menu */}
-            <button className="text-neutral-500 hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
+            <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
               <MoreHorizontal size={18} />
             </button>
           </div>
