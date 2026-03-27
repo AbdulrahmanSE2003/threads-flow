@@ -1,5 +1,5 @@
 import { MoreHorizontal } from "lucide-react";
-import Avatar from "@/app/_components/Avatar";
+import Avatar from "@/app/_components/ui/Avatar";
 import Image from "next/image";
 import { formatTimestamp } from "@/lib/utils";
 import { PostWithDetails } from "@/types/post";

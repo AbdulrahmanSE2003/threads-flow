@@ -1,9 +1,10 @@
 import Image from "next/image";
-import Avatar from "../_components/Avatar";
+import Avatar from "../_components/ui/Avatar";
 
 // NOTE TEMPORARY
 import avatar from "@/public/avatar.png";
 import AddPost from "../(main)/feed/_components/AddPost";
+import UserName from "../_components/ui/UserName";
 
 const ProfilePage = () => {
   // const currentUser = prisma.User.read;
@@ -15,9 +16,7 @@ const ProfilePage = () => {
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold">Abdulrahman Saad</h1>
             <div className="flex items-center gap-2">
-              <span className="text-[15px] font-medium text-foreground opacity-90">
-                _abdulr_hman
-              </span>
+              <UserName username="_abdulr_hman" />
             </div>
           </div>
           <Avatar size={96} className="rounded-full object-cover" />

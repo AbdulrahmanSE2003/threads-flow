@@ -1,8 +1,8 @@
-import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import AddPost from "./_components/AddPost";
 import PostFeed from "./_components/PostFeed";
 import PostSkeleton from "./_components/PostSkeleton";
+import AddPostButton from "./_components/AddPostButton";
 
 export default async function FeedPage() {
   return (
@@ -24,12 +24,7 @@ export default async function FeedPage() {
       </div>
 
       {/* Create post button */}
-      <button
-        // replace bg-amber-400 with bg-main
-        className={`fixed bottom-12 right-12 py-4 p-5 rounded-2xl bg-amber-400 border border-border cursor-pointer group scale-100 active:scale-75 duration-500 `}
-      >
-        <Plus className={`size-8 stroke-foreground`} />
-      </button>
+      <AddPostButton />
     </div>
   );
 }

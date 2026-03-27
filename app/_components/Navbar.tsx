@@ -3,6 +3,9 @@
 import { AtSign, Home, Menu, Plus, User2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Modal } from "./ui/Modal";
+import CreatePost from "./CreatePost";
 
 const navItems = [
   { icon: Home, path: "/feed" },
@@ -11,6 +14,8 @@ const navItems = [
 
 const Navbar = () => {
   const pathname = usePathname();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <nav
@@ -41,7 +46,10 @@ const Navbar = () => {
             </Link>
 
             {i === 0 && (
-              <button className="bg-zinc-900/80 text-zinc-700 hover:text-white w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300">
+              <button
+                onClick={() => setIsModalOpen((prev) => !prev)}
+                className="bg-zinc-900/80 text-zinc-700 hover:text-white w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
+              >
                 <Plus className="size-9" />
               </button>
             )}
@@ -55,6 +63,12 @@ const Navbar = () => {
       >
         <Menu />
       </button>
+
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <CreatePost />
+        </Modal>
+      )}
     </nav>
   );
 };
