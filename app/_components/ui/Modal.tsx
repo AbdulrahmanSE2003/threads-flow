@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  show: "create" | "menu";
   children: React.ReactNode;
   title?: string;
 }
@@ -14,11 +13,9 @@ export function Modal({
   isOpen,
   onClose,
   children,
-  show = "create",
   title = "New Thread",
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const isCreate = show === "create";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -53,27 +50,24 @@ export function Modal({
         <div
           ref={modalRef}
           className={cn(
-            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative max-h-144 animate-in zoom-in-95 duration-300 z-50`,
-            isCreate ? "min-h-48  w-xl" : "h-fit min-w-44 max-w-64",
+            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative min-h-48  w-xl max-h-144 animate-in zoom-in-95 duration-300 z-50`,
           )}
         >
-          {isCreate && (
-            <div
-              className={`flex justify-between items-center border-b border-border p-4`}
+          <div
+            className={`flex justify-between items-center border-b border-border p-4`}
+          >
+            <button
+              onClick={onClose}
+              className={`text-md font-medium tracking-wider cursor-pointer opacity-85 hover:opacity-100 transition-opacity duration-300`}
             >
-              <button
-                onClick={onClose}
-                className={`text-md font-medium tracking-wider cursor-pointer opacity-85 hover:opacity-100 transition-opacity duration-300`}
-              >
-                Cancel
-              </button>
-              {title && (
-                <span className={`font-semibold text-[14px] tracking-wider`}>
-                  {title}
-                </span>
-              )}
-            </div>
-          )}
+              Cancel
+            </button>
+            {title && (
+              <span className={`font-semibold text-[14px] tracking-wider`}>
+                {title}
+              </span>
+            )}
+          </div>
 
           <div className={`p-4`}>{children}</div>
         </div>

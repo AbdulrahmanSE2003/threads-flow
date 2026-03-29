@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { AtSign, Home, Menu, MenuIcon, Plus, User2 } from "lucide-react";
+import { AtSign, Home, Menu, Plus, User2 } from "lucide-react";
 import { Modal } from "./ui/Modal";
 import CreatePost from "./CreatePost";
 import {
@@ -17,18 +17,10 @@ const navItems = [
   { icon: User2, path: "/profile" },
 ];
 
-type options = "create" | "menu";
-
 const Navbar = ({ username }: { username: string }) => {
   const pathname = usePathname();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalOption, setModalOption] = useState<options>("create");
-
-  const handleModalClick = (element: options) => {
-    setIsModalOpen(true);
-    setModalOption(element);
-  };
 
   return (
     <nav
@@ -60,7 +52,7 @@ const Navbar = ({ username }: { username: string }) => {
 
             {i === 0 && (
               <button
-                onClick={() => handleModalClick("create")}
+                onClick={() => setIsModalOpen(true)}
                 className="bg-foreground/15 hover:bg-foreground/10 text-foreground w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
               >
                 <Plus className="size-9" />
@@ -80,11 +72,7 @@ const Navbar = ({ username }: { username: string }) => {
         <MenuList />
       </DropdownMenu>
 
-      <Modal
-        show={modalOption}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <CreatePost username={username} />
       </Modal>
     </nav>

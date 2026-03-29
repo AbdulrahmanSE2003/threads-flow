@@ -21,7 +21,7 @@ export function ThemeToggle() {
   ];
 
   return (
-    <div className="flex items-center bg-background dark:bg-zinc-900 border border-border p-1 rounded-xl w-fit relative m-1.5">
+    <div className="flex items-center bg-popover border border-border p-1 rounded-xl w-fit relative m-1.5">
       {options.map((option) => {
         const isActive = theme === option.name;
 

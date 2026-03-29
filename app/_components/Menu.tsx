@@ -11,7 +11,7 @@ import { LogOut, UserPen } from "lucide-react";
 
 const MenuList = () => {
   return (
-    <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-2xl overflow-hidden">
+    <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-xl overflow-hidden">
       {/* Theme Toggle Section */}
       <ThemeToggle />
       <DropdownMenuSeparator className="bg-zinc-100 dark:bg-zinc-800" />
