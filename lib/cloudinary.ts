@@ -13,7 +13,7 @@ export async function uploadImage(fileUri: string) {
   return result.secure_url;
 }
 
-export const uploadToCloudinary = async (file: File) => {
+export const uploadToCloudinary = async (file: File): Promise<string> => {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
@@ -21,7 +21,7 @@ export const uploadToCloudinary = async (file: File) => {
     cloudinary.uploader
       .upload_stream({ folder: "threadFlow" }, (error, result) => {
         if (error) reject(error);
-        else resolve(result?.secure_url);
+        else resolve(result?.secure_url ?? "");
       })
       .end(buffer);
   });

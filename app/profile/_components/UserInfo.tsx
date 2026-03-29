@@ -4,9 +4,11 @@ import Image from "next/image";
 
 import avatar from "@/public/avatar.png";
 import UserName from "@/app/_components/ui/UserName";
-import { JWTPayload } from "@/lib/auth/jwt";
+import { UserWithCount } from "@/types/post";
 
-const UserInfo = ({ currentUser }: { currentUser: JWTPayload }) => {
+const UserInfo = ({ currentUser }: { currentUser: UserWithCount }) => {
+  const followerCounts = currentUser._count.followers || 0;
+
   return (
     <div className="mt-4 md:mt-12 bg-white dark:bg-main border border-border w-full md:w-2xl rounded-3xl flex flex-col gap-1 h-full p-5 relative">
       {/* Header Section: Name & Photo */}
@@ -19,34 +21,53 @@ const UserInfo = ({ currentUser }: { currentUser: JWTPayload }) => {
             <UserName username={currentUser?.username ?? ""} />
           </div>
         </div>
-        <Avatar size={96} className="rounded-full object-cover" />
+        <Avatar
+          avatarSrc={currentUser.avatarUrl}
+          size={96}
+          className="rounded-full object-cover"
+        />
       </div>
 
       {/* Bio Section */}
       <div className="mt-1">
         <p className="text-[15px] leading-relaxed whitespace-pre-line text-zinc-800 dark:text-zinc-200">
-          20 Years{"\n"}
-          Real Madrid 🤍⭐{"\n"}
-          Trying to be better 🤲
+          {currentUser.bio}
         </p>
       </div>
 
       {/* Followers Section (Threads Style) */}
       <div className="mt-2 flex items-center gap-3">
-        <div className="flex items-center">
-          <div className="relative w-5 h-5 rounded-full">
-            <Image src={avatar} alt="follower" fill className="object-cover" />
+        {followerCounts > 3 && (
+          <div className="flex items-center">
+            <div className="relative w-5 h-5 rounded-full">
+              <Image
+                src={avatar}
+                alt="follower"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-5 h-5 -ml-2.5 rounded-full z-1">
+              <Image
+                src={avatar}
+                alt="follower"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-5 h-5 -ml-2.5 rounded-full z-2">
+              <Image
+                src={avatar}
+                alt="follower"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
-          <div className="relative w-5 h-5 -ml-2.5 rounded-full z-1">
-            <Image src={avatar} alt="follower" fill className="object-cover" />
-          </div>
-          <div className="relative w-5 h-5 -ml-2.5 rounded-full z-2">
-            <Image src={avatar} alt="follower" fill className="object-cover" />
-          </div>
-        </div>
+        )}
 
         <span className="text-[14px] text-zinc-500 hover:underline cursor-pointer">
-          29 followers
+          {followerCounts || 0} follower
         </span>
       </div>
 
