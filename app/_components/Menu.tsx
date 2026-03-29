@@ -1,36 +1,42 @@
-import { LogOut, Settings2 } from "lucide-react";
+"use client";
+
+import { logoutAction } from "@/actions/auth.actions";
 import { ThemeToggle } from "./ui/ThemeToggle";
-import { clearSession } from "@/lib/auth/session";
-import { redirect } from "next/navigation";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/app/_components/ui/dropdown-menu";
+import { LogOut, UserPen } from "lucide-react";
 
 const MenuList = () => {
-  const handleLogout = async () => {
-    await clearSession();
-    redirect("/login");
-  };
   return (
-    <ul
-      className={`flex flex-col gap-3 items-start [&_li]:hover:bg-zinc-200/80 [&_li]:dark:hover:bg-zinc-800/80 [&_li]:p-3 [&_li]:transition-colors [&_li]:duration-300 [&_li]:rounded-xl [&_li]:w-full [&_li]:cursor-pointer`}
-    >
+    <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-2xl overflow-hidden">
+      {/* Theme Toggle Section */}
       <ThemeToggle />
-      <hr className={`border-border w-full`} />
-      <li>
-        <button
-          className={`flex items-center gap-2 transition-colors duration-300 cursor-pointer`}
-        >
-          Edit Profile
-        </button>
-      </li>
-      <hr className={`border-border w-full`} />
-      <li>
-        <button
-          onClick={handleLogout}
-          className={`text-red-600 flex items-center gap-2 transition-colors duration-300 cursor-pointer`}
-        >
-          Log out
-        </button>
-      </li>
-    </ul>
+      <DropdownMenuSeparator className="bg-zinc-100 dark:bg-zinc-800" />
+
+      {/* Edit Profile */}
+      <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer rounded-lg focus:bg-zinc-100 dark:focus:bg-zinc-800 transition-colors">
+        <span className="text-sm font-medium">Edit Profile</span>
+        <UserPen className="size-4 text-zinc-500" />
+      </DropdownMenuItem>
+
+      <DropdownMenuSeparator className="bg-zinc-100 dark:bg-zinc-800" />
+
+      {/* Log out */}
+      <DropdownMenuItem
+        variant="destructive"
+        onSelect={(e) => {
+          e.preventDefault();
+          logoutAction();
+        }}
+        className="flex items-center justify-between px-3 py-2.5 cursor-pointer rounded-lg focus:bg-red-50 dark:focus:bg-red-950/30 group transition-colors duration-300"
+      >
+        <span className="text-sm font-bold">Log out</span>
+        <LogOut className="size-4" />
+      </DropdownMenuItem>
+    </DropdownMenuContent>
   );
 };
 

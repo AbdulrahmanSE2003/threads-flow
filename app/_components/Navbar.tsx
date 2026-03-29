@@ -3,9 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { AtSign, Home, Menu, Plus, User2 } from "lucide-react";
+import { AtSign, Home, Menu, MenuIcon, Plus, User2 } from "lucide-react";
 import { Modal } from "./ui/Modal";
 import CreatePost from "./CreatePost";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/app/_components/ui/dropdown-menu";
 import MenuList from "./Menu";
 
 const navItems = [
@@ -67,23 +71,21 @@ const Navbar = ({ username }: { username: string }) => {
       </div>
 
       {/* Menu Button */}
-      <button
-        onClick={() => handleModalClick("menu")}
-        className={`text-foreground has-hover:text-foreground/70 transition-colors duration-300 cursor-pointer`}
-      >
-        <Menu />
-      </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="text-foreground transition-colors duration-300 cursor-pointer">
+            <Menu />
+          </button>
+        </DropdownMenuTrigger>
+        <MenuList />
+      </DropdownMenu>
 
       <Modal
         show={modalOption}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        {modalOption === "create" ? (
-          <CreatePost username={username} />
-        ) : (
-          <MenuList />
-        )}
+        <CreatePost username={username} />
       </Modal>
     </nav>
   );

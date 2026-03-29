@@ -1,13 +1,14 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => setMounted(true), []);
 
   if (!mounted)
@@ -20,7 +21,7 @@ export function ThemeToggle() {
   ];
 
   return (
-    <div className="flex items-center bg-background dark:bg-zinc-900 border border-border p-1 rounded-xl w-fit relative">
+    <div className="flex items-center bg-background dark:bg-zinc-900 border border-border p-1 rounded-xl w-fit relative m-1.5">
       {options.map((option) => {
         const isActive = theme === option.name;
 
@@ -29,7 +30,7 @@ export function ThemeToggle() {
             key={option.name}
             onClick={() => setTheme(option.name)}
             className={`
-              relative z-10 flex items-center justify-center gap-2 px-6 py-2 rounded-lg transition-all duration-300 cursor-pointer
+              relative z-10 flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg transition-all duration-300 cursor-pointer
               text-foreground`}
           >
             {option.icon ? (
@@ -43,10 +44,7 @@ export function ThemeToggle() {
             )}
 
             {isActive && (
-              <div
-                className="absolute inset-0 bg-zinc-200/80 dark:bg-zinc-800/80 border border-zinc-700/50 rounded-lg -z-10 shadow-sm transition-all duration-300"
-                style={{ layoutId: "active-theme" } as any}
-              />
+              <div className="absolute inset-0 bg-zinc-200/80 dark:bg-zinc-800/80 border border-border rounded-lg -z-10 shadow-sm transition-all duration-300" />
             )}
           </button>
         );
