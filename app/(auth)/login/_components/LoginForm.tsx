@@ -35,7 +35,7 @@ const LoginForm = () => {
       className="flex flex-col gap-3 justify-center items-center"
     >
       <Input
-        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
+        className="w-3/5 bg-white dark:bg-neutral-900 border border-border/50"
         placeholder="Enter your email"
         type="email"
         name="email"
@@ -48,7 +48,7 @@ const LoginForm = () => {
       )}
 
       <Input
-        className="w-3/5 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800"
+        className="w-3/5 bg-white dark:bg-neutral-900 border border-border/50"
         placeholder="Enter your password"
         type="password"
         name="password"

@@ -6,7 +6,13 @@ import { Modal } from "@/app/_components/ui/Modal";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-const AddPost = ({ className = "" }: { className?: string }) => {
+const AddPost = ({
+  className = "",
+  username,
+}: {
+  className?: string;
+  username: string;
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -33,7 +39,7 @@ const AddPost = ({ className = "" }: { className?: string }) => {
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <CreatePost />
+          <CreatePost username={username} />
         </Modal>
       )}
     </div>

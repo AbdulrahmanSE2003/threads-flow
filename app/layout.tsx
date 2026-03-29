@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Navbar from "./_components/Navbar";
+import { getSession } from "@/lib/auth/session";
+import { Providers } from "./_components/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,27 +15,30 @@ export const metadata: Metadata = {
   description: "Share what's on your mind",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`
           ${inter.className} 
           antialiased 
-          bg-white dark:bg-black 
-          text-black dark:text-white 
+          bg-background
+          text-foreground 
           min-h-screen
         `}
       >
-        <Toaster richColors position="top-center" theme="system" />
-        <Navbar />
-        <main className="relative flex flex-col min-h-screen items-center">
-          {children}
-        </main>
+        <Providers>
+          <Toaster richColors position="top-center" theme="system" />
+          {session && <Navbar username={session?.username ?? ""} />}
+          <main className="relative flex flex-col min-h-screen items-center bg-background">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

@@ -5,13 +5,13 @@ import { Modal } from "@/app/_components/ui/Modal";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-const AddPostButton = () => {
+const AddPostButton = ({ username }: { username: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CreatePost />
+        <CreatePost username={username} />
       </Modal>
       <button
         onClick={() => setIsModalOpen((prev) => !prev)}

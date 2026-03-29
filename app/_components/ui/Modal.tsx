@@ -1,10 +1,11 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  show: "create" | "menu";
   children: React.ReactNode;
   title?: string;
 }
@@ -13,14 +14,17 @@ export function Modal({
   isOpen,
   onClose,
   children,
+  show = "create",
   title = "New Thread",
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const isCreate = show === "create";
 
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      console.log(e);
+    if (!isOpen) return;
 
+    document.body.style.overflow = "hidden";
+    const handleOutsideClick = (e: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         onClose();
       }
@@ -37,33 +41,39 @@ export function Modal({
     return () => {
       document.removeEventListener("keydown", handleEscapeButton);
       document.removeEventListener("mousedown", handleOutsideClick);
+      document.body.style.overflow = "unset";
     };
-  }, [onClose]);
+  }, [onClose, isOpen]);
 
   return (
     isOpen && (
       <div
-        className={`absolute left-0 right-0 top-0 bottom-0 bg-zinc-900/50 backdrop-blur-[2px] z-10 flex justify-center items-center`}
+        className={`fixed inset-0 animate-in fade-in duration-300 bg-zinc-900/50 backdrop-blur-[2px] z-100 flex justify-center items-center`}
       >
         <div
           ref={modalRef}
-          className={`bg-zinc-900 rounded-2xl border border-border relative w-xl min-h-48 max-h-144`}
+          className={cn(
+            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative max-h-144 animate-in zoom-in-95 duration-300 z-50`,
+            isCreate ? "min-h-48  w-xl" : "h-fit min-w-44 max-w-64",
+          )}
         >
-          <div
-            className={`flex justify-between items-center border-b border-border p-4`}
-          >
-            <button
-              onClick={onClose}
-              className={`text-md font-medium tracking-wider cursor-pointer opacity-85 hover:opacity-100 transition-opacity duration-300`}
+          {isCreate && (
+            <div
+              className={`flex justify-between items-center border-b border-border p-4`}
             >
-              Cancel
-            </button>
-            {title && (
-              <span className={`font-bold text-[14px] tracking-wider`}>
-                {title}
-              </span>
-            )}
-          </div>
+              <button
+                onClick={onClose}
+                className={`text-md font-medium tracking-wider cursor-pointer opacity-85 hover:opacity-100 transition-opacity duration-300`}
+              >
+                Cancel
+              </button>
+              {title && (
+                <span className={`font-semibold text-[14px] tracking-wider`}>
+                  {title}
+                </span>
+              )}
+            </div>
+          )}
 
           <div className={`p-4`}>{children}</div>
         </div>

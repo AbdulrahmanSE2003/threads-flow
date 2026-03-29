@@ -1,21 +1,30 @@
 "use client";
-
-import { AtSign, Home, Menu, Plus, User2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+
+import { AtSign, Home, Menu, Plus, User2 } from "lucide-react";
 import { Modal } from "./ui/Modal";
 import CreatePost from "./CreatePost";
+import MenuList from "./Menu";
 
 const navItems = [
   { icon: Home, path: "/feed" },
   { icon: User2, path: "/profile" },
 ];
 
-const Navbar = () => {
+type options = "create" | "menu";
+
+const Navbar = ({ username }: { username: string }) => {
   const pathname = usePathname();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalOption, setModalOption] = useState<options>("create");
+
+  const handleModalClick = (element: options) => {
+    setIsModalOpen(true);
+    setModalOption(element);
+  };
 
   return (
     <nav
@@ -24,7 +33,7 @@ const Navbar = () => {
       {/* Logo */}
       <Link href={"/feed"}>
         <AtSign
-          className={`opacity-80 size-10 stroke-white hover:opacity-100 transition-opacity duration-300 cursor-pointer`}
+          className={`opacity-80 size-10 stroke-foreground hover:opacity-100 transition-opacity duration-300 cursor-pointer`}
         />
       </Link>
 
@@ -36,19 +45,19 @@ const Navbar = () => {
               href={item.path}
               className={`w-4/5 flex justify-center rounded-xl p-4 py-2 transition-colors duration-300 ${
                 pathname === item.path
-                  ? "text-white"
-                  : "text-zinc-700 hover:bg-zinc-900/80"
+                  ? "text-foreground"
+                  : "text-foreground hover:bg-zinc-200/80 dark:hover:bg-zinc-900/80"
               }`}
             >
               <item.icon
-                className={`size-9 ${pathname === item.path ? "fill-white stroke-white" : ""}`}
+                className={`size-9 ${pathname === item.path ? "fill-foreground stroke-foreground" : ""}`}
               />
             </Link>
 
             {i === 0 && (
               <button
-                onClick={() => setIsModalOpen((prev) => !prev)}
-                className="bg-zinc-900/80 text-zinc-700 hover:text-white w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
+                onClick={() => handleModalClick("create")}
+                className="bg-foreground/15 hover:bg-foreground/10 text-foreground w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
               >
                 <Plus className="size-9" />
               </button>
@@ -59,16 +68,23 @@ const Navbar = () => {
 
       {/* Menu Button */}
       <button
-        className={`text-zinc-700 hover:text-white has-hover:text-white transition-colors duration-300 cursor-pointer`}
+        onClick={() => handleModalClick("menu")}
+        className={`text-foreground has-hover:text-foreground/70 transition-colors duration-300 cursor-pointer`}
       >
         <Menu />
       </button>
 
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <CreatePost />
-        </Modal>
-      )}
+      <Modal
+        show={modalOption}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        {modalOption === "create" ? (
+          <CreatePost username={username} />
+        ) : (
+          <MenuList />
+        )}
+      </Modal>
     </nav>
   );
 };

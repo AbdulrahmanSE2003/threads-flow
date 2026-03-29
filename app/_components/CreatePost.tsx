@@ -1,23 +1,27 @@
 "use client";
 
-import { Image } from "lucide-react";
+import { Image as LucideImage } from "lucide-react";
 import Avatar from "./ui/Avatar";
 import { Textarea } from "./ui/Textarea";
 import UserName from "./ui/UserName";
 
-const CreatePost = () => {
+type CreatePostProps = {
+  username: string;
+};
+
+const CreatePost = ({ username }: CreatePostProps) => {
   return (
     <div className={`flex w-full gap-2 justify-start items-start `}>
-      <Avatar className={`self-start mt-2 `} />
+      <Avatar className={`self-start `} />
       <div className={`flex flex-col items-start w-full gap-2`}>
         {/* username */}
-        <UserName username="_abdulr_hman" />
+        <UserName username={username} />
         <Textarea
           className={`max-h-40 w-full overflow-y-auto  resize-none`}
           cols={6}
         />
         <button className={`cursor-pointer`}>
-          <Image
+          <LucideImage
             className={`stroke-border hover:stroke-zinc-600 transition-colors duration-300`}
           />
         </button>
