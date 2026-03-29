@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth/session";
 
 const PostFeed = async () => {
   const session = await getSession();
+  if (!session) return;
   const posts = await prisma.post.findMany({
     include: {
       author: {
@@ -24,11 +25,7 @@ const PostFeed = async () => {
         </p>
       ) : (
         posts?.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            currentUserId={session?.sub ?? null}
-          />
+          <PostCard key={post.id} post={post} currentUser={session} />
         ))
       )}
     </div>

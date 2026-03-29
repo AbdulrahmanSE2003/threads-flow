@@ -4,17 +4,23 @@ import Image from "next/image";
 import { formatTimestamp } from "@/lib/utils";
 import { PostWithDetails } from "@/types/post";
 import LikeButton from "./LikeButton";
+import { JWTPayload } from "@/lib/auth/jwt";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/app/_components/ui/dropdown-menu";
+import PostMenu from "./PostMenu";
 
 interface PostCardProps {
   post: PostWithDetails;
-  currentUserId: string | null;
+  currentUser: JWTPayload;
 }
 
-const PostCard = ({ post, currentUserId }: PostCardProps) => {
+const PostCard = ({ post, currentUser }: PostCardProps) => {
   const { author, caption, images, createdAt, _count } = post;
 
-  const isLiked = post.likes.some((like) => like.userId === currentUserId);
-  cosnt isOwner = 
+  const isLiked = post.likes.some((like) => like.userId === currentUser?.sub);
+  const isOwner = author.username === currentUser.username;
 
   return (
     <div className="w-full py-4 px-4 border-b border-border">
@@ -35,9 +41,16 @@ const PostCard = ({ post, currentUserId }: PostCardProps) => {
               </span>
             </div>
             {/* TODO: post menu */}
-            <button className="text-neutral-500 bg-amber-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
-              <MoreHorizontal size={18} />
-            </button>
+            {isOwner && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="text-neutral-500 bg-amber-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
+                    <MoreHorizontal size={18} />
+                  </button>
+                </DropdownMenuTrigger>
+                <PostMenu postId={post?.id ?? ""} />
+              </DropdownMenu>
+            )}
           </div>
 
           {/* Post Text */}
@@ -70,7 +83,7 @@ const PostCard = ({ post, currentUserId }: PostCardProps) => {
           <LikeButton
             initialLikeCount={_count.likes}
             initialIsLiked={isLiked}
-            currentUserId={currentUserId}
+            currentUserId={currentUser?.sub}
             postId={post.id}
           />
         </div>

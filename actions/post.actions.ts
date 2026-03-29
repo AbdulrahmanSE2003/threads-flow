@@ -73,3 +73,14 @@ export const createPost = async (
   revalidatePath("/feed");
   return { success: true };
 };
+
+export const deletePost = async (postId: string) => {
+  const session = await getSession();
+  if (!session) return;
+
+  await prisma.post.delete({
+    where: { id: postId },
+  });
+
+  revalidatePath("/feed");
+};
