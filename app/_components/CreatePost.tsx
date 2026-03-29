@@ -36,7 +36,6 @@ const CreatePost = ({ username }: CreatePostProps) => {
       };
     }
 
-    console.log("Valid Data:", result.data);
     await createPost(prevState, formData);
   };
 

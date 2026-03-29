@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/app/_components/ui/dropdown-menu";
 import PostMenu from "./PostMenu";
+import PostCarousel from "./PostCarousel";
 
 interface PostCardProps {
   post: PostWithDetails;
@@ -59,25 +60,7 @@ const PostCard = ({ post, currentUser }: PostCardProps) => {
           </p>
 
           {/* Images Grid/Carousel Preview */}
-          {images && images?.length > 0 && (
-            <div className="relative w-full mt-3">
-              <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 hideScroll">
-                {images?.map((img, index) => (
-                  <div
-                    key={index}
-                    className="relative flex-none w-3/5 md:w-2/4 aspect-4/5 rounded-2xl overflow-hidden snap-start"
-                  >
-                    <Image
-                      src={img}
-                      alt={`Post image ${index + 1}`}
-                      fill
-                      className={"object-cover"}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {images && images?.length > 0 && <PostCarousel images={images} />}
 
           {/* Like Button */}
           <LikeButton

@@ -2,9 +2,11 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 
+type options = "create" | "image";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  show: options;
   children: React.ReactNode;
   title?: string;
 }
@@ -13,9 +15,12 @@ export function Modal({
   isOpen,
   onClose,
   children,
+  show = "create",
   title = "New Thread",
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const showImage = show === "image";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,24 +55,26 @@ export function Modal({
         <div
           ref={modalRef}
           className={cn(
-            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative min-h-48  w-xl max-h-144 animate-in zoom-in-95 duration-300 z-50`,
+            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative ${showImage ? " h-full w-xl" : "min-h-48  w-xl max-h-144"} animate-in zoom-in-95 duration-300 z-50`,
           )}
         >
-          <div
-            className={`flex justify-between items-center border-b border-border p-4`}
-          >
-            <button
-              onClick={onClose}
-              className={`text-md font-medium tracking-wider cursor-pointer opacity-85 hover:opacity-100 transition-opacity duration-300`}
+          {!showImage && (
+            <div
+              className={`flex justify-between items-center border-b border-border p-4`}
             >
-              Cancel
-            </button>
-            {title && (
-              <span className={`font-semibold text-[14px] tracking-wider`}>
-                {title}
-              </span>
-            )}
-          </div>
+              <button
+                onClick={onClose}
+                className={`text-md font-medium tracking-wider cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-300`}
+              >
+                Cancel
+              </button>
+              {title && (
+                <span className={`font-semibold text-[14px] tracking-wider`}>
+                  {title}
+                </span>
+              )}
+            </div>
+          )}
 
           <div className={`p-4`}>{children}</div>
         </div>

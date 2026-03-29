@@ -28,7 +28,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/feed", req.url));
   }
 
-  console.log("PATH:", req.nextUrl.pathname);
   // Everything else → let through
   return NextResponse.next();
 }
