@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/auth/session";
-import UserInfo from "./_components/UserInfo";
+import UserInfo from "../../profile/_components/UserInfo";
 import { prisma } from "@/lib/db/prisma";
 
 const ProfilePage = async () => {

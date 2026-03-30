@@ -6,7 +6,7 @@ type options = "create" | "image";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  show: options;
+  show?: options;
   children: React.ReactNode;
   title?: string;
 }

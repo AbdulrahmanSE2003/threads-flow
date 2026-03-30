@@ -11,6 +11,7 @@ import {
 } from "@/app/_components/ui/dropdown-menu";
 import PostMenu from "./PostMenu";
 import PostCarousel from "./PostCarousel";
+import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithDetails;
@@ -34,24 +35,30 @@ const PostCard = ({ post, currentUser }: PostCardProps) => {
           {/* Username & date */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-1 text-foreground text-sm tracking-tighter">
-              <span className="font-bold text-sm hover:underline cursor-pointer">
-                {author.displayName}
-              </span>
+              <Link
+                href={`/profile/${author.username}`}
+                className="font-bold text-sm hover:underline cursor-pointer"
+              >
+                {author.username}
+              </Link>
               <span className="text-neutral-500 text-sm font-extralight ">
                 {formatTimestamp(createdAt)}
               </span>
             </div>
             {/* TODO: post menu */}
-            {isOwner && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="text-neutral-500 bg-amber-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
-                    <MoreHorizontal size={18} />
-                  </button>
-                </DropdownMenuTrigger>
-                <PostMenu postId={post?.id ?? ""} />
-              </DropdownMenu>
-            )}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
+                  <MoreHorizontal size={18} />
+                </button>
+              </DropdownMenuTrigger>
+              <PostMenu
+                postId={post?.id ?? ""}
+                isOwner={isOwner}
+                author={author.username}
+              />
+            </DropdownMenu>
           </div>
 
           {/* Post Text */}

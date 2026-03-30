@@ -65,7 +65,8 @@ const Navbar = ({ username }: { username: string }) => {
       {/* Menu Button */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="text-foreground transition-colors duration-300 cursor-pointer">
+          <button className="text-foreground opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+            ``
             <Menu />
           </button>
         </DropdownMenuTrigger>
