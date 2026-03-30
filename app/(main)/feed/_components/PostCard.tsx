@@ -28,7 +28,9 @@ const PostCard = ({ post, currentUser }: PostCardProps) => {
     <div className="w-full py-4 px-4 border-b border-border">
       <div className="flex gap-3">
         {/* Left Side: Avatar */}
-        <Avatar avatarSrc={author.avatarUrl} />
+        <Link href={`/profile/${author.username}`} className={`h-fit`}>
+          <Avatar avatarSrc={author.avatarUrl} />
+        </Link>
 
         {/* Right Side: Content */}
         <div className="flex flex-col gap-1 text-foreground/70 w-full">

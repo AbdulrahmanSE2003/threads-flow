@@ -22,11 +22,12 @@ const UserPage = async ({
 
   if (!user) return;
 
-  console.log(user);
+  const isOwner = session.username === user.username;
+  console.log(isOwner);
 
   return (
     <div className="min-h-[calc(100vh - 3rem)] bg-background text-foreground flex items-center justify-center">
-      <UserInfo currentUser={user} />
+      <UserInfo currentUser={user} isOwner={isOwner} />
     </div>
   );
 };

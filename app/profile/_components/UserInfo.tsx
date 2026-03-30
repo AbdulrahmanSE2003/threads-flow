@@ -6,7 +6,13 @@ import avatar from "@/public/avatar.png";
 import UserName from "@/app/_components/ui/UserName";
 import { UserWithCount } from "@/types/post";
 
-const UserInfo = ({ currentUser }: { currentUser: UserWithCount }) => {
+const UserInfo = ({
+  currentUser,
+  isOwner,
+}: {
+  currentUser: UserWithCount;
+  isOwner: boolean;
+}) => {
   const followerCounts = currentUser._count.followers || 0;
 
   return (
@@ -75,10 +81,12 @@ const UserInfo = ({ currentUser }: { currentUser: UserWithCount }) => {
         Edit profile
       </button>
 
-      <AddPost
-        username={currentUser?.username ?? ""}
-        className={"border-none mt-2 px-0"}
-      />
+      {isOwner && (
+        <AddPost
+          username={currentUser?.username ?? ""}
+          className={"border-none mt-2 px-0"}
+        />
+      )}
     </div>
   );
 };

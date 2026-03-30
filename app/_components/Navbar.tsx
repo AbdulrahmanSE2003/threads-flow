@@ -38,7 +38,11 @@ const Navbar = ({ username }: { username: string }) => {
         {navItems.map((item, i) => (
           <div key={i} className="w-full flex flex-col items-center gap-5">
             <Link
-              href={item.path}
+              href={
+                item.path === "/profile"
+                  ? `${item.path}/${username}`
+                  : item.path
+              }
               className={`w-4/5 flex justify-center rounded-xl p-4 py-2 transition-colors duration-300 ${
                 pathname === item.path
                   ? "text-foreground"
@@ -66,7 +70,6 @@ const Navbar = ({ username }: { username: string }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="text-foreground opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
-            ``
             <Menu />
           </button>
         </DropdownMenuTrigger>
