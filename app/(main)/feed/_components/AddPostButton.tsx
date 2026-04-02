@@ -11,7 +11,7 @@ const AddPostButton = ({ username }: { username: string }) => {
   return (
     <>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CreatePost username={username} />
+        <CreatePost onClose={() => setIsModalOpen(false)} username={username} />
       </Modal>
       <button
         onClick={() => setIsModalOpen((prev) => !prev)}

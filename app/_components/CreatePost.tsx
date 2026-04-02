@@ -1,6 +1,6 @@
 "use client";
 
-import { Image as LucideImage } from "lucide-react";
+import { Image as LucideImage, Plus } from "lucide-react";
 import Avatar from "./ui/Avatar";
 import { Textarea } from "./ui/Textarea";
 import UserName from "./ui/UserName";
@@ -8,13 +8,17 @@ import { useActionState, useState, useRef, useEffect } from "react";
 import { postState } from "@/types/post";
 import { postSchema } from "@/lib/validations/post.schema";
 import { createPost } from "@/actions/post.actions";
+import Image from "next/image";
 
 type CreatePostProps = {
   username: string;
+  onClose: () => void;
 };
 
-const CreatePost = ({ username }: CreatePostProps) => {
+const CreatePost = ({ username, onClose }: CreatePostProps) => {
   const [caption, setCaption] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -22,27 +26,53 @@ const CreatePost = ({ username }: CreatePostProps) => {
     inputRef.current?.focus();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      previews.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previews]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const newFiles = [...selectedFiles, ...files];
+    setSelectedFiles(newFiles);
+
+    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+    setPreviews(newPreviews);
+  };
+
+  const removeImage = (index: number) => {
+    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(updatedFiles);
+
+    URL.revokeObjectURL(previews[index]);
+    setPreviews(previews.filter((_, i) => i !== index));
+
+    if (fileInputRef.current) {
+      const dataTransfer = new DataTransfer();
+      updatedFiles.forEach((file) => dataTransfer.items.add(file));
+      fileInputRef.current.files = dataTransfer.files;
+    }
+  };
+
   const handleSubmit = async (prevState: postState, formData: FormData) => {
-    const imageFiles = formData.getAll("images") as File[];
-
-    const validFiles = imageFiles.filter((file) => file.size > 0);
-
     const raw = {
       caption: formData.get("caption"),
-      images: validFiles,
+      images: selectedFiles,
     };
 
     const result = postSchema.safeParse(raw);
 
     if (!result.success) {
-      setCaption("");
       return {
         errors: result.error.flatten().fieldErrors,
       };
     }
-    console.log(result.data);
 
     await createPost(prevState, formData);
+    onClose();
   };
 
   const [state, formAction, isPending] = useActionState(handleSubmit, null);
@@ -76,9 +106,30 @@ const CreatePost = ({ username }: CreatePostProps) => {
           </p>
         )}
 
+        {previews.length > 0 && (
+          <div className="flex gap-2 flex-wrap mb-2">
+            {previews.map((url, index) => (
+              <div key={url} className="relative group w-20 h-20">
+                <Image
+                  src={url}
+                  fill
+                  alt="preview"
+                  className="w-full h-full object-cover rounded-lg border border-border"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute -top-1 -right-1 z-10 bg-zinc-900 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
+                >
+                  <Plus className="size-3 rotate-45 cursor-pointer" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-2">
-            {/* Hidden Input - Accepts images only */}
             <input
               type="file"
               name="images"
@@ -86,9 +137,9 @@ const CreatePost = ({ username }: CreatePostProps) => {
               ref={fileInputRef}
               accept="image/*"
               className="hidden"
+              onChange={handleFileChange}
             />
 
-            {/* Visual Trigger */}
             <button
               type="button"
               onClick={handleIconClick}

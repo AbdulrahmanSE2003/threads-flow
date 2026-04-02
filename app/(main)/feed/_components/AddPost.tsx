@@ -40,7 +40,10 @@ const AddPost = ({
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <CreatePost username={username} />
+          <CreatePost
+            onClose={() => setIsModalOpen(false)}
+            username={username}
+          />
         </Modal>
       )}
     </div>

@@ -74,7 +74,6 @@ export const createPost = async (
   });
 
   revalidatePath("/feed");
-  return { success: true };
 };
 
 export const deletePost = async (postId: string) => {

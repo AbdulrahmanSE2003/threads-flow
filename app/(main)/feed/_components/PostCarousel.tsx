@@ -41,7 +41,7 @@ const PostCarousel = ({ images }: { images: string[] }) => {
             src={imageToShow}
             alt={`Post image ${imageToShow}`}
             fill
-            className={"object-cover"}
+            className={"object-cover scale-105"}
           />
         </Modal>
       )}

@@ -84,7 +84,7 @@ const Navbar = ({ username }: { username: string }) => {
       </DropdownMenu>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CreatePost username={username} />
+        <CreatePost onClose={() => setIsModalOpen(false)} username={username} />
       </Modal>
     </nav>
   );
