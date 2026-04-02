@@ -25,6 +25,7 @@ const AddPost = ({
       {}
       <Avatar />
       <input
+        readOnly
         onClick={() => setIsModalOpen((prev) => !prev)}
         className={`grow focus:outline-none text-sm`}
         type="text"
