@@ -8,7 +8,8 @@ import PostCard from "@/app/(main)/feed/_components/PostCard";
 import UserHeader from "./UserHeader";
 import FollowersSection from "./FollowersSection";
 import { getSession } from "@/lib/auth/session";
-import { JWTPayload } from "jose";
+import UserActionBtn from "./UserActionBtn";
+import { CustomJWTPayload } from "@/lib/auth/jwt";
 
 const UserInfo = async ({
   currentUser,
@@ -17,11 +18,12 @@ const UserInfo = async ({
   currentUser: UserWithCount;
   isOwner: boolean;
 }) => {
-  const followerCounts = currentUser._count.followers || 0;
-  const postsCount = currentUser._count.posts || 0;
+  const followerCounts = currentUser._count.followers;
+  const postsCount = currentUser._count.posts;
 
-  const user = (await getSession()) as JWTPayload;
+  const user = (await getSession()) as CustomJWTPayload;
 
+  // Fetching Posts for user's profile
   const posts = await prisma.post.findMany({
     where: { authorId: currentUser.id },
     include: {
@@ -33,6 +35,15 @@ const UserInfo = async ({
     },
     orderBy: { createdAt: "desc" },
     take: 20,
+  });
+
+  const isFollowing = await prisma.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId: user?.sub as string,
+        followingId: currentUser.id,
+      },
+    },
   });
 
   return (
@@ -53,18 +64,12 @@ const UserInfo = async ({
         postsCount={postsCount}
       />
 
-      <div className={`flex flex-col gap-y-2 my-2`}>
-        {!isOwner && (
-          <button className="w-full py-1.5 bg-foreground text-background hover:bg-foreground/80 border border-border rounded-md font-semibold text-sm transition-all cursor-pointer duration-300">
-            Follow
-          </button>
-        )}
-        {isOwner && (
-          <button className="w-full py-1.5 border border-border rounded-md font-semibold text-sm hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300">
-            Edit profile
-          </button>
-        )}
-      </div>
+      <UserActionBtn
+        isFollowing={!!isFollowing}
+        isOwner={isOwner}
+        followingId={currentUser.id}
+        followingUserName={currentUser.username}
+      />
 
       {isOwner && (
         <AddPost

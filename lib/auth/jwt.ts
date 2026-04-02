@@ -20,3 +20,8 @@ export async function verifyToken(token: string): Promise<JWTPayload> {
   const { payload } = await jwtVerify(token, secret);
   return payload as JWTPayload;
 }
+
+export interface CustomJWTPayload extends JWTPayload {
+  username: string;
+  displayName: string;
+}

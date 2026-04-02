@@ -2,7 +2,6 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 
 const PageHeader = ({ page }: { page: string | null }) => {
   page = page?.split("/")[1] || "Feed";
-  console.log(page);
   const pageTitle = capitalizeFirstLetter(page ?? "Feed");
 
   return (

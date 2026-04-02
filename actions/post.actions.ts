@@ -38,7 +38,6 @@ export const createPost = async (
   };
 
   const result = postSchema.safeParse(raw);
-  console.log("here");
 
   if (!result.success) {
     return {

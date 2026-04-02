@@ -1,6 +1,5 @@
 import { MoreHorizontal } from "lucide-react";
 import Avatar from "@/app/_components/ui/Avatar";
-import Image from "next/image";
 import { cn, formatTimestamp } from "@/lib/utils";
 import { PostWithDetails } from "@/types/post";
 import LikeButton from "./LikeButton";
