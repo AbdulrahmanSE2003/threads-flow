@@ -54,9 +54,11 @@ const UserInfo = async ({
       />
 
       <div className={`flex flex-col gap-y-2 my-2`}>
-        <button className="w-full py-1.5 bg-foreground text-background hover:bg-foreground/80 border border-border rounded-md font-semibold text-sm transition-all cursor-pointer duration-300">
-          Follow
-        </button>
+        {!isOwner && (
+          <button className="w-full py-1.5 bg-foreground text-background hover:bg-foreground/80 border border-border rounded-md font-semibold text-sm transition-all cursor-pointer duration-300">
+            Follow
+          </button>
+        )}
         {isOwner && (
           <button className="w-full py-1.5 border border-border rounded-md font-semibold text-sm hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300">
             Edit profile

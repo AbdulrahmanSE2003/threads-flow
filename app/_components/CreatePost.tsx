@@ -4,7 +4,7 @@ import { Image as LucideImage } from "lucide-react";
 import Avatar from "./ui/Avatar";
 import { Textarea } from "./ui/Textarea";
 import UserName from "./ui/UserName";
-import { useActionState, useState, useRef } from "react";
+import { useActionState, useState, useRef, useEffect } from "react";
 import { postState } from "@/types/post";
 import { postSchema } from "@/lib/validations/post.schema";
 import { createPost } from "@/actions/post.actions";
@@ -16,6 +16,11 @@ type CreatePostProps = {
 const CreatePost = ({ username }: CreatePostProps) => {
   const [caption, setCaption] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (prevState: postState, formData: FormData) => {
     const imageFiles = formData.getAll("images") as File[];
@@ -56,6 +61,7 @@ const CreatePost = ({ username }: CreatePostProps) => {
         <UserName username={username} />
 
         <Textarea
+          ref={inputRef}
           name="caption"
           placeholder="What's new?"
           className="max-h-40 w-full overflow-y-auto resize-none bg-transparent outline-none text-[15px]"
