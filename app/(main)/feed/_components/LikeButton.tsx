@@ -29,10 +29,8 @@ const LikeButton = ({
 
   const handleLike = () => {
     startTransition(async () => {
-      setOptimistic(optimistic.isLiked ? "dislike" : "like");
-
-      // TODO Server action
       if (!currentUserId) return;
+      setOptimistic(optimistic.isLiked ? "dislike" : "like");
       await handleLikeButton(currentUserId, postId);
     });
   };

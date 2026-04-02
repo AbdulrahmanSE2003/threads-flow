@@ -4,7 +4,7 @@ import { getSession } from "@/lib/auth/session";
 
 const PostFeed = async () => {
   const session = await getSession();
-  if (!session) return;
+  if (!session) return null;
   const posts = await prisma.post.findMany({
     include: {
       author: {

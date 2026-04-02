@@ -17,3 +17,7 @@ export function formatTimestamp(date: string | Date) {
     .replace(" days", "d")
     .replace(" day", "d");
 }
+
+export function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

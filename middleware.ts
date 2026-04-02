@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/auth/jwt";
 
 export async function middleware(req: NextRequest) {
+  const requestHeaders = new Headers(req.headers);
+  // Set the pathname in a custom header
+  requestHeaders.set("x-pathname", req.nextUrl.pathname);
+
   const token = req.cookies.get("auth-token")?.value;
   const isAuthRoute =
     req.nextUrl.pathname.startsWith("/login") ||
@@ -29,7 +33,11 @@ export async function middleware(req: NextRequest) {
   }
 
   // Everything else → let through
-  return NextResponse.next();
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

@@ -36,7 +36,7 @@ const UserInfo = async ({
   });
 
   return (
-    <div className="mt-4 md:mt-12 bg-white dark:bg-main border border-border w-full md:w-2xl rounded-3xl flex flex-col gap-1 h-full p-5 relative">
+    <div className=" bg-white dark:bg-main border border-border w-full md:w-2xl rounded-3xl flex flex-col gap-1 h-full p-5 relative">
       {/* Header Section: Name & Photo */}
       <UserHeader currentUser={currentUser} />
 
