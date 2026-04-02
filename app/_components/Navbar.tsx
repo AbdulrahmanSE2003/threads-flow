@@ -38,7 +38,7 @@ const Navbar = ({ username }: { username: string }) => {
         {navItems.map((item, i) => {
           const isProfile = item.path === "/profile";
           const isActive = isProfile
-            ? pathname.startsWith("/profile")
+            ? pathname === `/profile/${username}`
             : pathname === item.path;
 
           const href = isProfile ? `/profile/${username}` : item.path;
