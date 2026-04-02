@@ -1,7 +1,7 @@
 import { MoreHorizontal } from "lucide-react";
 import Avatar from "@/app/_components/ui/Avatar";
 import Image from "next/image";
-import { formatTimestamp } from "@/lib/utils";
+import { cn, formatTimestamp } from "@/lib/utils";
 import { PostWithDetails } from "@/types/post";
 import LikeButton from "./LikeButton";
 import { JWTPayload } from "@/lib/auth/jwt";
@@ -16,16 +16,17 @@ import Link from "next/link";
 interface PostCardProps {
   post: PostWithDetails;
   currentUser: JWTPayload;
+  className?: string;
 }
 
-const PostCard = ({ post, currentUser }: PostCardProps) => {
+const PostCard = ({ post, currentUser, className }: PostCardProps) => {
   const { author, caption, images, createdAt, _count } = post;
 
   const isLiked = post.likes.some((like) => like.userId === currentUser?.sub);
   const isOwner = author.username === currentUser.username;
 
   return (
-    <div className="w-full py-4 px-4 border-b border-border">
+    <div className={cn("w-full py-4 px-4 border-b border-border", className)}>
       <div className="flex gap-3">
         {/* Left Side: Avatar */}
         <Link href={`/profile/${author.username}`} className={`h-fit`}>
@@ -47,8 +48,8 @@ const PostCard = ({ post, currentUser }: PostCardProps) => {
                 {formatTimestamp(createdAt)}
               </span>
             </div>
-            {/* TODO: post menu */}
 
+            {/* Post Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">

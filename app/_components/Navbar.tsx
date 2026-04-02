@@ -35,35 +35,42 @@ const Navbar = ({ username }: { username: string }) => {
 
       {/* Nav Links */}
       <div className={`flex flex-col items-center justify-evenly gap-5 w-full`}>
-        {navItems.map((item, i) => (
-          <div key={i} className="w-full flex flex-col items-center gap-5">
-            <Link
-              href={
-                item.path === "/profile"
-                  ? `${item.path}/${username}`
-                  : item.path
-              }
-              className={`w-4/5 flex justify-center rounded-xl p-4 py-2 transition-colors duration-300 ${
-                pathname === item.path
-                  ? "text-foreground"
-                  : "text-foreground hover:bg-zinc-200/80 dark:hover:bg-zinc-900/80"
-              }`}
-            >
-              <item.icon
-                className={`size-9 ${pathname === item.path ? "fill-foreground stroke-foreground" : ""}`}
-              />
-            </Link>
+        {navItems.map((item, i) => {
+          const isProfile = item.path === "/profile";
+          const isActive = isProfile
+            ? pathname.startsWith("/profile")
+            : pathname === item.path;
 
-            {i === 0 && (
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-foreground/15 hover:bg-foreground/10 text-foreground w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
+          const href = isProfile ? `/profile/${username}` : item.path;
+
+          return (
+            <div key={i} className="w-full flex flex-col items-center gap-5">
+              <Link
+                href={href}
+                className={`w-4/5 flex justify-center rounded-xl p-4 py-2 transition-colors duration-300 ${
+                  isActive
+                    ? "text-foreground bg-zinc-100/50 dark:bg-zinc-900/50"
+                    : "text-zinc-500 hover:bg-zinc-200/80 dark:hover:bg-zinc-900/80"
+                }`}
               >
-                <Plus className="size-9" />
-              </button>
-            )}
-          </div>
-        ))}
+                <item.icon
+                  className={`size-9 transition-all ${
+                    isActive ? "fill-foreground stroke-foreground" : "fill-none"
+                  }`}
+                />
+              </Link>
+
+              {i === 0 && (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-foreground/10 hover:bg-foreground/15 text-foreground w-4/5 flex justify-center rounded-xl p-4 py-2 cursor-pointer transition-colors duration-300"
+                >
+                  <Plus className="size-9" />
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Menu Button */}

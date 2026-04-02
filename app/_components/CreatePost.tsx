@@ -35,6 +35,7 @@ const CreatePost = ({ username }: CreatePostProps) => {
         errors: result.error.flatten().fieldErrors,
       };
     }
+    console.log(result.data);
 
     await createPost(prevState, formData);
   };

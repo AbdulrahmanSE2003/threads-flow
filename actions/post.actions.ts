@@ -29,12 +29,16 @@ export const createPost = async (
   prevState: postState,
   formData: FormData,
 ): Promise<postState> => {
+  const rawImages = formData.getAll("images") as File[] | null;
+  const validImages = rawImages?.filter((file) => file.size > 0);
+
   const raw = {
     caption: formData.get("caption"),
-    images: formData.getAll("images") as File[],
+    images: validImages,
   };
 
   const result = postSchema.safeParse(raw);
+  console.log("here");
 
   if (!result.success) {
     return {
@@ -42,14 +46,13 @@ export const createPost = async (
     };
   }
 
-  // uploading to cloudinary
   const session = await getSession();
   if (!session) return { errors: { general: ["You must be logged in"] } };
 
-  // const images  to be handled
+  // uploading to cloudinary
   const imageFiles = formData.getAll("images") as File[] | null;
-
   const images: string[] = [];
+
   if (imageFiles && imageFiles.length > 0) {
     const validFiles = imageFiles.filter((file) => file.size > 0);
 
@@ -65,7 +68,7 @@ export const createPost = async (
   await prisma.post.create({
     data: {
       caption: result.data.caption,
-      images,
+      images: images,
       authorId: session.sub,
     },
   });
