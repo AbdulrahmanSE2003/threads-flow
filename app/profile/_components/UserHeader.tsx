@@ -4,7 +4,7 @@ import { UserWithCount } from "@/types/post";
 
 const UserHeader = ({ currentUser }: { currentUser: UserWithCount }) => {
   return (
-    <div className="flex justify-between items-center w-full">
+    <div className="flex justify-between items-center w-full ">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{currentUser.displayName ?? ""}</h1>
         <div className="flex items-center gap-2">
