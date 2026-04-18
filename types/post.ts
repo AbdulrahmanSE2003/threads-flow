@@ -18,6 +18,13 @@ export type UserWithCount = Prisma.UserGetPayload<{
   };
 }>;
 
+export type FollowerPreview = {
+  follower: {
+    avatarUrl: string | null
+    username: string
+  }
+}
+
 export type postState = {
   errors?: {
     caption?: string[];

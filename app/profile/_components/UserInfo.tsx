@@ -37,6 +37,18 @@ const UserInfo = async ({
     take: 20,
   });
 
+  const threeFollswers = await prisma.follow.findMany({
+    where:{
+      followingId:currentUser.id
+    },
+    include: {
+    follower: {
+      select: { avatarUrl: true, username: true }
+    }
+  },
+  take: 3
+  })
+
   const isFollowing = await prisma.follow.findUnique({
     where: {
       followerId_followingId: {
@@ -60,6 +72,7 @@ const UserInfo = async ({
 
       {/* Followers Section (Threads Style) */}
       <FollowersSection
+      followers ={threeFollswers}
         followerCounts={followerCounts}
         postsCount={postsCount}
       />
