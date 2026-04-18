@@ -9,9 +9,11 @@ import { useState } from "react";
 const AddPost = ({
   className = "",
   username,
+  imageSrc,
 }: {
   className?: string;
   username: string;
+  imageSrc: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,7 +25,7 @@ const AddPost = ({
       )}
     >
       {}
-      <Avatar />
+      <Avatar avatarSrc={imageSrc} />
       <input
         readOnly
         onClick={() => setIsModalOpen((prev) => !prev)}

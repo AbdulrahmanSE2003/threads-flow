@@ -13,7 +13,7 @@ const UserHeader = ({ currentUser }: { currentUser: UserWithCount }) => {
       </div>
       <Avatar
         avatarSrc={currentUser.avatarUrl}
-        size={96}
+        size={84}
         className="rounded-full object-cover"
       />
     </div>

@@ -73,6 +73,7 @@ const UserInfo = async ({
 
       {isOwner && (
         <AddPost
+          imageSrc={currentUser.avatarUrl ?? ""}
           username={currentUser?.username ?? ""}
           className={"border-none mt-2 px-0"}
         />
@@ -85,15 +86,18 @@ const UserInfo = async ({
           </>
         }
       >
-        <hr />
         {posts.length > 0 &&
           posts.map((post) => (
-            <PostCard
+            <div
               key={post.id}
-              post={post}
-              currentUser={user}
-              className={`px-0`}
-            />
+            >
+              <hr />
+              <PostCard
+                post={post}
+                currentUser={user}
+                className={`px-0`}
+              />
+            </div>
           ))}
       </Suspense>
     </div>

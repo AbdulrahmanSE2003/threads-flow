@@ -11,7 +11,7 @@ const FollowersSection = ({
 }) => {
   return (
     <div className={`flex items-center justify-between`}>
-      <div className="mt-2 flex items-center gap-3">
+      <div className="mt-2 flex items-center gap-3 bg-amber-300">
         {followerCounts > 3 && (
           <div className="flex items-center">
             <div className="relative w-5 h-5 rounded-full">

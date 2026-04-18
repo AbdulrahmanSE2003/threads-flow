@@ -49,7 +49,7 @@ const UserActionBtn = ({
         </button>
       )}
       {isOwner && (
-        <button className="w-full py-1.5 border border-border rounded-md font-semibold text-sm hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300">
+        <button className="w-full py-1.5 border border-border rounded-md font-semibold text-sm bg-amber-500 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300">
           Edit profile
         </button>
       )}

@@ -25,7 +25,7 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
   const isOwner = author.username === currentUser.username;
 
   return (
-    <div className={cn("w-full py-4 px-4 border-b border-border", className)}>
+    <div className={cn("w-full py-4 px-4 ", className)}>
       <div className="flex gap-3">
         {/* Left Side: Avatar */}
         <Link href={`/profile/${author.username}`} className={`h-fit`}>

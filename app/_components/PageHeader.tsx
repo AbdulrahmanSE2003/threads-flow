@@ -6,7 +6,7 @@ const PageHeader = ({ page }: { page: string | null }) => {
 
   return (
     <h6
-      className={`my-4 font-semibold tracking-wider text-[14px] cursor-default`}
+      className={`my-3 font-semibold tracking-wider text-[14px] cursor-default`}
     >
       {pageTitle}
     </h6>

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 // TODO: Make src required
 const Avatar = ({
   avatarSrc,
-  size = 48,
+  size = 40,
   className = "",
 }: {
   avatarSrc?: string | null;
@@ -27,6 +27,7 @@ const Avatar = ({
           alt={"adamJohn"}
           width={size}
           height={size}
+          style={{ height: `${size}px` }} // Overrides height: auto
           className="object-cover"
         />
       </div>
