@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { comparePassword, hashPassword } from "@/lib/auth/password";
-import { clearSession, setSession } from "@/lib/auth/session";
+import { clearSession, getSession, setSession } from "@/lib/auth/session";
 import { LoginSchema, RegisterSchema } from "@/lib/validations/auth.schema";
 import { FormState } from "@/types/auth";
 
@@ -132,3 +132,10 @@ export const logoutAction = async () => {
   await clearSession();
   redirect("/login");
 };
+
+
+export const editProfile = async(prevState: FormState, formData:FormData)=>{
+  const session  =await getSession();
+
+  if (!session) return { errors: { general: ["You must be logged in"] } };
+}

@@ -36,7 +36,7 @@ export const EditProfileSchema = z.object({
       .min(2, "Name must be at least 2 characters.")
       .max(50, "Name cannot exceed 50 characters."),
 
-  bio: z.string().optional(),
+  bio: z.string().max(160, "Bio cannot exceed 160 characters.").optional()
   
 })
 
