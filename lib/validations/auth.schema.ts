@@ -28,7 +28,21 @@ export const LoginSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters."),
 });
 
+
+export const EditProfileSchema = z.object({
+  displayName: z
+      .string()
+      .trim()
+      .min(2, "Name must be at least 2 characters.")
+      .max(50, "Name cannot exceed 50 characters."),
+
+  bio: z.string().optional(),
+  
+})
+
+
 // These are your TypeScript types — auto-generated from the schemas.
 // You never write these manually.
 export type RegisterInput = z.infer<typeof RegisterSchema>;
 export type LoginInput = z.infer<typeof LoginSchema>;
+export type EDitProfile = z.infer<typeof EditProfileSchema>;
