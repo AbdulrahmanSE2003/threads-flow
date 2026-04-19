@@ -8,21 +8,24 @@ import {
   DropdownMenuSeparator,
 } from "@/app/_components/ui/dropdown-menu";
 import { LogOut, UserPen } from "lucide-react";
+import { useState } from "react";
 
 const MenuList = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-xl overflow-hidden">
+    <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-xl overflow-hidden flex flex-col gap-y-1">
       {/* Theme Toggle Section */}
       <ThemeToggle />
       <DropdownMenuSeparator className="bg-zinc-100 dark:bg-zinc-800" />
 
       {/* Edit Profile */}
-      <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer rounded-lg focus:bg-zinc-100 dark:focus:bg-zinc-800 transition-colors">
+      {/* <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer rounded-lg focus:bg-zinc-100 dark:focus:bg-zinc-800 transition-colors">
         <span className="text-sm font-medium">Edit Profile</span>
         <UserPen className="size-4 text-zinc-500" />
-      </DropdownMenuItem>
+      </DropdownMenuItem> 
 
       <DropdownMenuSeparator className="bg-zinc-100 dark:bg-zinc-800" />
+      */}
 
       {/* Log out */}
       <DropdownMenuItem
