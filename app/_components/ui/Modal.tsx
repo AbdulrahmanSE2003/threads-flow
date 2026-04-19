@@ -50,16 +50,16 @@ export function Modal({
   return (
     isOpen && (
       <div
-        className={`fixed inset-0 animate-in fade-in duration-300 bg-zinc-900/50 backdrop-blur-[2px] z-100 flex justify-center items-center`}
+        className={`fixed inset-0 animate-in fade-in duration-300 bg-zinc-900/50 backdrop-blur-[2px] flex justify-center items-center z-9998`}
       >
         <div
           ref={modalRef}
           className={cn(
-            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative animate-in zoom-in-95 duration-300 z-50 overflow-hidden flex flex-col`,
+            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative animate-in zoom-in-95 duration-300 z-9999 overflow-hidden flex flex-col`,
             showImage
               ? "h-full w-xl"
               : show === "edit"
-                ? "w-[400px]"
+                ? "w-[520px]"
                 : "min-h-48 w-xl max-h-144",
           )}
         >

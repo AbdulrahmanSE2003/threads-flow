@@ -24,7 +24,7 @@ const Navbar = ({ username }: { username: string }) => {
 
   return (
     <nav
-      className={`h-full fixed max-md:hidden top-0 bottom-0 left-0 w-19 flex flex-col justify-between items-center z-10 py-5`}
+      className={`h-full fixed max-md:hidden top-0 bottom-0 left-0 w-19 flex flex-col justify-between items-center z-[100] py-5`}
     >
       {/* Logo */}
       <Link href={"/feed"}>
