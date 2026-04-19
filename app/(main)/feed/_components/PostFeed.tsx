@@ -11,7 +11,7 @@ const PostFeed = async () => {
         select: { username: true, displayName: true, avatarUrl: true },
       },
       likes: { select: { userId: true } },
-      _count: { select: { likes: true } },
+      _count: { select: { likes: true, comments: true } },
     },
     orderBy: { createdAt: "desc" },
     take: 20,

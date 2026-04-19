@@ -6,7 +6,7 @@ export type PostWithDetails = Prisma.PostGetPayload<{
       select: { username: true; displayName: true; avatarUrl: true };
     };
     likes: { select: { userId: true } };
-    _count: { select: { likes: true } };
+    _count: { select: { likes: true; comments: true } };
   };
 }>;
 
@@ -20,10 +20,10 @@ export type UserWithCount = Prisma.UserGetPayload<{
 
 export type FollowerPreview = {
   follower: {
-    avatarUrl: string | null
-    username: string
-  }
-}
+    avatarUrl: string | null;
+    username: string;
+  };
+};
 
 export type postState = {
   errors?: {
@@ -32,3 +32,29 @@ export type postState = {
     general?: string[];
   };
 } | null | void;
+
+export type CommentWithAuthor = Prisma.CommentGetPayload<{
+  include: {
+    user: {
+      select: { username: true; displayName: true; avatarUrl: true };
+    };
+  };
+}>;
+
+// types/post.ts
+export type PostWithComments = Prisma.PostGetPayload<{
+  include: {
+    author: {
+      select: { username: true; displayName: true; avatarUrl: true };
+    };
+    likes: { select: { userId: true } };
+    _count: { select: { likes: true; comments: true } };
+    comments: {
+      include: {
+        user: {
+          select: { username: true; displayName: true; avatarUrl: true };
+        };
+      };
+    };
+  };
+}>;

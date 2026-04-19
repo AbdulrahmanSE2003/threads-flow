@@ -1,8 +1,9 @@
 import PageHeader from "@/app/_components/PageHeader";
-import UserInfo from "@/app/profile/_components/UserInfo";
+import UserInfo from "./_components/UserInfo";
 import { getSession } from "@/lib/auth/session";
 import { headers } from "next/headers";
 import ProfileNotFound from "./not-found";
+import { getCachedUser } from "@/lib/utils";
 
 const UserPage = async ({
   params,

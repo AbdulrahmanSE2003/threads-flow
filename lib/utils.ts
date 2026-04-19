@@ -24,7 +24,7 @@ export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const getCachedUser = unstable_cache(
+export const getCachedUser = unstable_cache(
   async (username: string) => {
     return prisma.user.findUnique({
       where: { username },

@@ -2,7 +2,7 @@ import { MoreHorizontal } from "lucide-react";
 import Avatar from "@/app/_components/ui/Avatar";
 import { cn, formatTimestamp } from "@/lib/utils";
 import { PostWithDetails } from "@/types/post";
-import LikeButton from "./LikeButton";
+import PostActions from "./PostActions";
 import { JWTPayload } from "@/lib/auth/jwt";
 import {
   DropdownMenu,
@@ -33,7 +33,7 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
     >
       {/* Absolute overlay link */}
       <Link
-        href={`/post/${post.id}`}
+        href={`/thread/${post.id}`}
         className="absolute inset-0 z-0"
         aria-label="View post"
       />
@@ -87,13 +87,14 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
               <PostCarousel images={images} />
             </div>
           )}
-          {/* Like Button */}
+          {/* Action Buttons */}
           <div className="pointer-events-auto relative z-20">
-            <LikeButton
+            <PostActions
               initialLikeCount={_count.likes}
               initialIsLiked={isLiked}
               currentUserId={currentUser?.sub}
               postId={post.id}
+              commentCount={_count.comments}
             />
           </div>
         </div>
