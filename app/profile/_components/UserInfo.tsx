@@ -84,14 +84,8 @@ const UserInfo = async ({
         isOwner={isOwner}
         followingId={currentUser.id}
         followingUserName={currentUser.username}
-      >
-        <EditModal
-          initialData={{
-            displayName: currentUser.displayName,
-            bio: currentUser?.bio,
-          }}
-        />
-      </UserActionBtn>
+        currentUser={currentUser}
+      />
 
       {isOwner && (
         <AddPost

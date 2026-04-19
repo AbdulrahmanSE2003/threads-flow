@@ -3,14 +3,17 @@
 import { toggleFollow } from "@/actions/follow.actions";
 import { Modal } from "@/app/_components/ui/Modal";
 import { cn } from "@/lib/utils";
-import { ReactNode, useOptimistic, useState, useTransition } from "react";
+import { UserWithCount } from "@/types/post";
+import { useOptimistic, useState, useTransition } from "react";
+import { EditModal } from "./EditModal";
 
 type UserActionBtnProps = {
   isOwner: boolean;
   isFollowing: boolean;
   followingId: string;
   followingUserName: string;
-  children: ReactNode;
+
+  currentUser: UserWithCount;
 };
 
 const UserActionBtn = ({
@@ -18,7 +21,7 @@ const UserActionBtn = ({
   isFollowing,
   followingId,
   followingUserName,
-  children,
+  currentUser,
 }: UserActionBtnProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -67,7 +70,13 @@ const UserActionBtn = ({
         title="Edit Profile"
         show="edit"
       >
-        {children}
+        <EditModal
+          initialData={{
+            displayName: currentUser.displayName,
+            bio: currentUser?.bio,
+          }}
+          onClose={() => setIsModalOpen(false)}
+        />
       </Modal>
     </div>
   );

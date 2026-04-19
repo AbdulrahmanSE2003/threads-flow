@@ -12,9 +12,10 @@ interface EditModalProps {
     displayName?: string;
     bio?: string | null;
   };
+  onClose: () => void;
 }
 
-export const EditModal = ({ initialData }: EditModalProps) => {
+export const EditModal = ({ initialData, onClose }: EditModalProps) => {
   const handleSubmit = async (prevState: FormState, formData: FormData) => {
     const raw = {
       displayName: formData.get("displayName"),
@@ -27,6 +28,10 @@ export const EditModal = ({ initialData }: EditModalProps) => {
       return {
         errors: result.error.flatten().fieldErrors,
       };
+    }
+
+    if (result.success) {
+      onClose();
     }
 
     return editProfile(prevState, formData);
