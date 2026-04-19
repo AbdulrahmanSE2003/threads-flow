@@ -55,7 +55,12 @@ export function Modal({
         <div
           ref={modalRef}
           className={cn(
-            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative ${showImage ? " h-full w-xl" : "min-h-48  w-xl max-h-144"} animate-in zoom-in-95 duration-300 z-50`,
+            `bg-background dark:bg-zinc-900 rounded-2xl border border-border relative animate-in zoom-in-95 duration-300 z-50 overflow-hidden flex flex-col`,
+            showImage
+              ? "h-full w-xl"
+              : show === "edit"
+                ? "w-[400px]"
+                : "min-h-48 w-xl max-h-144",
           )}
         >
           {!showImage && (

@@ -32,13 +32,13 @@ const UserInfo = async ({
         select: { username: true, displayName: true, avatarUrl: true },
       },
       likes: { select: { userId: true } },
-      _count: { select: { likes: true } },
+      _count: { select: { likes: true, comments: true } },
     },
     orderBy: { createdAt: "desc" },
     take: 20,
   });
 
-  const threeFollswers = await prisma.follow.findMany({
+  const threeFollowers = await prisma.follow.findMany({
     where: {
       followingId: currentUser.id,
     },
@@ -73,7 +73,7 @@ const UserInfo = async ({
 
       {/* Followers Section (Threads Style) */}
       <FollowersSection
-        followers={threeFollswers}
+        followers={threeFollowers}
         followerCounts={followerCounts}
         postsCount={postsCount}
       />

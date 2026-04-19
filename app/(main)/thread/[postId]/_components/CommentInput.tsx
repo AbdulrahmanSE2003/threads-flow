@@ -3,7 +3,7 @@
 import Avatar from "@/app/_components/ui/Avatar";
 import { Textarea } from "@/app/_components/ui/Textarea";
 import { JWTPayload } from "@/lib/auth/jwt";
-import { useActionState, useRef, useState, useEffect } from "react";
+import { useActionState, useRef, useState } from "react";
 import { createComment } from "@/actions/post.actions";
 import { FormState } from "@/types/auth";
 

@@ -1,6 +1,8 @@
 import Avatar from "@/app/_components/ui/Avatar";
 import UserName from "@/app/_components/ui/UserName";
 import { UserWithCount } from "@/types/post";
+import { Camera } from "lucide-react";
+import UserProfileAvatar from "./UserProfileAvatar";
 
 const UserHeader = ({ currentUser }: { currentUser: UserWithCount }) => {
   return (
@@ -11,11 +13,7 @@ const UserHeader = ({ currentUser }: { currentUser: UserWithCount }) => {
           <UserName username={currentUser?.username ?? ""} />
         </div>
       </div>
-      <Avatar
-        avatarSrc={currentUser.avatarUrl}
-        size={84}
-        className="rounded-full object-cover"
-      />
+      <UserProfileAvatar src={currentUser.avatarUrl ?? ""} />
     </div>
   );
 };

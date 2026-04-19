@@ -5,15 +5,10 @@ import Link from "next/link";
 
 interface CommentCardProps {
   comment: CommentWithAuthor;
-  isLast?: boolean;
   className?: string;
 }
 
-const CommentCard = ({
-  comment,
-  isLast = false,
-  className,
-}: CommentCardProps) => {
+const CommentCard = ({ comment, className }: CommentCardProps) => {
   const { user, content, createdAt } = comment;
 
   return (

@@ -3,7 +3,6 @@ import Image from "next/image";
 import avatar from "@/public/avatar.png";
 import { cn } from "@/lib/utils";
 
-// TODO: Make src required
 const Avatar = ({
   avatarSrc,
   size = 40,

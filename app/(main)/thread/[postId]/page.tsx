@@ -84,12 +84,8 @@ const PostPage = async ({
           {/* Comment list */}
           {post.comments.length > 0 ? (
             <div className="mb-4">
-              {post.comments.map((comment, i) => (
-                <CommentCard
-                  key={comment.id}
-                  comment={comment}
-                  isLast={i === post.comments.length - 1}
-                />
+              {post.comments.map((comment) => (
+                <CommentCard key={comment.id} comment={comment} />
               ))}
             </div>
           ) : (
