@@ -47,7 +47,7 @@ const CommentInput = ({
   return (
     <div className="flex gap-4 px-3 items-start w-full">
       <div className="flex flex-col items-center shrink-0">
-        <Avatar size={40} avatarSrc={avatarUrl} />
+        <Avatar size={40} avatarSrc={avatarUrl ?? ""} />
       </div>
       <form
         action={formAction}

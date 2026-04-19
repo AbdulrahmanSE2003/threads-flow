@@ -52,7 +52,7 @@ const CommentsSection = async ({
           currentUser={session}
           postAuthor={post.author.username}
           postId={post.id}
-          avatarUrl={avatar?.avatarUrl}
+          avatarUrl={avatar?.avatarUrl ?? ""}
         />
       </div>
     </div>
