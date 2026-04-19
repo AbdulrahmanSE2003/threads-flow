@@ -11,12 +11,14 @@ interface CommentInputProps {
   currentUser: JWTPayload;
   postAuthor: string;
   postId: string;
+  avatarUrl: string | null;
 }
 
 const CommentInput = ({
   currentUser,
   postAuthor,
   postId,
+  avatarUrl,
 }: CommentInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [content, setContent] = useState("");
@@ -43,9 +45,9 @@ const CommentInput = ({
   };
 
   return (
-    <div className="flex gap-3 items-start w-full">
+    <div className="flex gap-4 px-3 items-start w-full">
       <div className="flex flex-col items-center shrink-0">
-        <Avatar size={36} />
+        <Avatar size={40} avatarSrc={avatarUrl} />
       </div>
       <form
         action={formAction}

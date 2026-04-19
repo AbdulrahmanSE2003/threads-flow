@@ -63,8 +63,8 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
             <div className="pointer-events-auto relative z-20">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85">
-                    <MoreHorizontal size={18} />
+                  <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1.5 rounded-full transition-colors cursor-pointer active:scale-85">
+                    <MoreHorizontal size={20} />
                   </button>
                 </DropdownMenuTrigger>
                 <PostMenu

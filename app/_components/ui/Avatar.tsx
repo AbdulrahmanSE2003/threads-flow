@@ -18,12 +18,13 @@ const Avatar = ({
         className={cn(
           "relative size-12 rounded-full overflow-hidden",
           `size-${size / 4}`,
+          !avatarSrc && "scale-135",
           className,
         )}
       >
         <Image
           src={avatarSrc || avatar}
-          alt={"adamJohn"}
+          alt={"Threads user"}
           width={size}
           height={size}
           style={{ height: `${size}px` }} // Overrides height: auto
