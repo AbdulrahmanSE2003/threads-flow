@@ -8,10 +8,8 @@ import {
   DropdownMenuSeparator,
 } from "@/app/_components/ui/dropdown-menu";
 import { LogOut, UserPen } from "lucide-react";
-import { useState } from "react";
 
 const MenuList = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <DropdownMenuContent className="w-fit max-w-56 border-border shadow-xl rounded-xl overflow-hidden flex flex-col gap-y-1">
       {/* Theme Toggle Section */}

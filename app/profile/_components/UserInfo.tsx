@@ -11,7 +11,6 @@ import UserHeader from "./UserHeader";
 import FollowersSection from "./FollowersSection";
 import UserActionBtn from "./UserActionBtn";
 import { Separator } from "@/app/_components/ui/separator";
-import { EditModal } from "./EditModal";
 
 const UserInfo = async ({
   currentUser,
