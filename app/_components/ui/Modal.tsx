@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 
-type options = "create" | "image";
+type options = "create" | "image" | "edit";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;

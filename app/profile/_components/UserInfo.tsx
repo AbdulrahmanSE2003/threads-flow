@@ -2,14 +2,16 @@ import AddPost from "@/app/(main)/feed/_components/AddPost";
 
 import { UserWithCount } from "@/types/post";
 import { prisma } from "@/lib/db/prisma";
+import { getSession } from "@/lib/auth/session";
+import { CustomJWTPayload } from "@/lib/auth/jwt";
 import { Suspense } from "react";
 import PostSkeleton from "@/app/(main)/feed/_components/PostSkeleton";
 import PostCard from "@/app/(main)/feed/_components/PostCard";
 import UserHeader from "./UserHeader";
 import FollowersSection from "./FollowersSection";
-import { getSession } from "@/lib/auth/session";
 import UserActionBtn from "./UserActionBtn";
-import { CustomJWTPayload } from "@/lib/auth/jwt";
+import { Separator } from "@/app/_components/ui/separator";
+import { EditModal } from "./EditModal";
 
 const UserInfo = async ({
   currentUser,
@@ -38,16 +40,16 @@ const UserInfo = async ({
   });
 
   const threeFollswers = await prisma.follow.findMany({
-    where:{
-      followingId:currentUser.id
+    where: {
+      followingId: currentUser.id,
     },
     include: {
-    follower: {
-      select: { avatarUrl: true, username: true }
-    }
-  },
-  take: 3
-  })
+      follower: {
+        select: { avatarUrl: true, username: true },
+      },
+    },
+    take: 3,
+  });
 
   const isFollowing = await prisma.follow.findUnique({
     where: {
@@ -72,7 +74,7 @@ const UserInfo = async ({
 
       {/* Followers Section (Threads Style) */}
       <FollowersSection
-      followers ={threeFollswers}
+        followers={threeFollswers}
         followerCounts={followerCounts}
         postsCount={postsCount}
       />
@@ -82,7 +84,14 @@ const UserInfo = async ({
         isOwner={isOwner}
         followingId={currentUser.id}
         followingUserName={currentUser.username}
-      />
+      >
+        <EditModal
+          initialData={{
+            displayName: currentUser.displayName,
+            bio: currentUser?.bio,
+          }}
+        />
+      </UserActionBtn>
 
       {isOwner && (
         <AddPost
@@ -91,6 +100,8 @@ const UserInfo = async ({
           className={"border-none mt-2 px-0"}
         />
       )}
+
+      <Separator />
 
       <Suspense
         fallback={
@@ -101,16 +112,12 @@ const UserInfo = async ({
       >
         {posts.length > 0 &&
           posts.map((post) => (
-            <div
+            <PostCard
               key={post.id}
-            >
-              <hr />
-              <PostCard
-                post={post}
-                currentUser={user}
-                className={`px-0`}
-              />
-            </div>
+              post={post}
+              currentUser={user}
+              className={`px-0`}
+            />
           ))}
       </Suspense>
     </div>

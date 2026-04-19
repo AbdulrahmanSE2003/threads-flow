@@ -154,4 +154,11 @@
   html {
     @apply font-sans;
   }
+
+  input::placeholder {
+    @apply transition-opacity duration-300;
+  }
+  input:focus {
+    @apply placeholder:opacity-0;
+  }
 }

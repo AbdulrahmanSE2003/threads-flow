@@ -1,14 +1,16 @@
 "use client";
 
 import { toggleFollow } from "@/actions/follow.actions";
+import { Modal } from "@/app/_components/ui/Modal";
 import { cn } from "@/lib/utils";
-import { useOptimistic, useTransition } from "react";
+import { ReactNode, useOptimistic, useState, useTransition } from "react";
 
 type UserActionBtnProps = {
   isOwner: boolean;
   isFollowing: boolean;
   followingId: string;
   followingUserName: string;
+  children: ReactNode;
 };
 
 const UserActionBtn = ({
@@ -16,7 +18,9 @@ const UserActionBtn = ({
   isFollowing,
   followingId,
   followingUserName,
+  children,
 }: UserActionBtnProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [optimistic, setOptimistic] = useOptimistic(
     { following: isFollowing },
@@ -49,10 +53,22 @@ const UserActionBtn = ({
         </button>
       )}
       {isOwner && (
-        <button className="w-full py-1.5 border border-border rounded-md font-semibold text-sm bg-amber-500 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300">
+        <button
+          onClick={() => setIsModalOpen((prev) => !prev)}
+          className="w-full py-1.5 border border-border rounded-md font-semibold text-sm hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer duration-300"
+        >
           Edit profile
         </button>
       )}
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Edit Profile"
+        show="edit"
+      >
+        {children}
+      </Modal>
     </div>
   );
 };

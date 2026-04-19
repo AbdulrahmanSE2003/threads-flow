@@ -5,5 +5,6 @@ export type FormState = {
     email?: string[];
     password?: string[];
     general?: string[];
+    bio?: string[];
   };
 } | null | void;
