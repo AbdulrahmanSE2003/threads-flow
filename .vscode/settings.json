@@ -3,5 +3,6 @@
     "other": "on",
     "comments": "on",
     "strings": "on"
-  }
+  },
+  "prisma.pinToPrisma6": true
 }

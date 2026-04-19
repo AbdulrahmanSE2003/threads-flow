@@ -25,13 +25,24 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
   const isOwner = author.username === currentUser.username;
 
   return (
-    <div className={cn("w-full py-4 px-4 border-b border-border", className)}>
-      <div className="flex gap-3">
+    <div
+      className={cn(
+        "w-full py-4 px-4 border-b border-border relative group",
+        className,
+      )}
+    >
+      {/* Absolute overlay link */}
+      <Link
+        href={`/post/${post.id}`}
+        className="absolute inset-0 z-0"
+        aria-label="View post"
+      />
+
+      <div className="flex gap-3 relative z-10 pointer-events-none">
         {/* Left Side: Avatar */}
         <Link href={`/profile/${author.username}`} className={`h-fit`}>
           <Avatar avatarSrc={author.avatarUrl} />
         </Link>
-
         {/* Right Side: Content */}
         <div className="flex flex-col gap-1 text-foreground/70 w-full">
           {/* Username & date */}
@@ -39,7 +50,7 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
             <div className="flex items-center gap-1 text-foreground text-sm tracking-tighter">
               <Link
                 href={`/profile/${author.username}`}
-                className="font-bold text-sm hover:underline cursor-pointer"
+                className="font-bold text-sm hover:underline cursor-pointer pointer-events-auto relative z-20"
               >
                 {author.username}
               </Link>
@@ -49,18 +60,20 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
             </div>
 
             {/* Post Menu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85 ">
-                  <MoreHorizontal size={18} />
-                </button>
-              </DropdownMenuTrigger>
-              <PostMenu
-                postId={post?.id ?? ""}
-                isOwner={isOwner}
-                author={author.username}
-              />
-            </DropdownMenu>
+            <div className="pointer-events-auto relative z-20">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="text-neutral-500 hover:bg-zinc-200 dark:hover:bg-zinc-900/70 p-1 rounded-full transition-colors cursor-pointer active:scale-85">
+                    <MoreHorizontal size={18} />
+                  </button>
+                </DropdownMenuTrigger>
+                <PostMenu
+                  postId={post?.id ?? ""}
+                  isOwner={isOwner}
+                  author={author.username}
+                />
+              </DropdownMenu>
+            </div>
           </div>
 
           {/* Post Text */}
@@ -69,15 +82,20 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
           </p>
 
           {/* Images Grid/Carousel Preview */}
-          {images && images?.length > 0 && <PostCarousel images={images} />}
-
+          {images && images?.length > 0 && (
+            <div className="pointer-events-auto relative z-20 mt-2">
+              <PostCarousel images={images} />
+            </div>
+          )}
           {/* Like Button */}
-          <LikeButton
-            initialLikeCount={_count.likes}
-            initialIsLiked={isLiked}
-            currentUserId={currentUser?.sub}
-            postId={post.id}
-          />
+          <div className="pointer-events-auto relative z-20">
+            <LikeButton
+              initialLikeCount={_count.likes}
+              initialIsLiked={isLiked}
+              currentUserId={currentUser?.sub}
+              postId={post.id}
+            />
+          </div>
         </div>
       </div>
     </div>
