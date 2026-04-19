@@ -155,10 +155,12 @@
     @apply font-sans;
   }
 
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     @apply transition-opacity duration-300;
   }
-  input:focus {
+  input:focus,
+  textarea:focus {
     @apply placeholder:opacity-0;
   }
 }

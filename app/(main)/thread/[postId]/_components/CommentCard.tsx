@@ -9,24 +9,28 @@ interface CommentCardProps {
   className?: string;
 }
 
-const CommentCard = ({ comment, isLast = false, className }: CommentCardProps) => {
+const CommentCard = ({
+  comment,
+  isLast = false,
+  className,
+}: CommentCardProps) => {
   const { user, content, createdAt } = comment;
 
   return (
-    <div className={cn("flex gap-3 py-3 px-4 group", className)}>
+    <div
+      className={cn(
+        "flex gap-3 py-3 px-4 group border-b border-border",
+        className,
+      )}
+    >
       {/* Left: Avatar + thread line */}
       <div className="flex flex-col items-center">
         <Link
           href={`/profile/${user.username}`}
           className="shrink-0 pointer-events-auto"
         >
-          <Avatar avatarSrc={user.avatarUrl} size={36} />
+          <Avatar avatarSrc={user.avatarUrl} size={40} />
         </Link>
-
-        {/* Thread connector line */}
-        {!isLast && (
-          <div className="w-px flex-1 mt-1 bg-border rounded-full min-h-4" />
-        )}
       </div>
 
       {/* Right: Content */}
@@ -46,15 +50,8 @@ const CommentCard = ({ comment, isLast = false, className }: CommentCardProps) =
           </div>
         </div>
 
-        {/* Display name (optional flair) */}
-        {user.displayName && user.displayName !== user.username && (
-          <span className="text-xs text-muted-foreground -mt-0.5">
-            {user.displayName}
-          </span>
-        )}
-
         {/* Comment body */}
-        <p className="text-[14.5px] leading-relaxed text-neutral-900 dark:text-neutral-100 whitespace-pre-wrap mt-0.5 break-words">
+        <p className="text-[14.5px] leading-relaxed text-neutral-900 dark:text-neutral-100 whitespace-pre-wrap mt-0.5 wrap-break-words">
           {content}
         </p>
       </div>

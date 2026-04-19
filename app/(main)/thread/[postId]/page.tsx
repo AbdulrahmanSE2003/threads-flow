@@ -5,7 +5,7 @@ import PostCard from "../../feed/_components/PostCard";
 import CommentInput from "./_components/CommentInput";
 import { prisma } from "@/lib/db/prisma";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowLeftCircle, MessageCircle } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 import PageHeader from "@/app/_components/PageHeader";
 import { headers } from "next/headers";
 import CommentCard from "./_components/CommentCard";
@@ -100,10 +100,11 @@ const PostPage = async ({
           )}
 
           {/* Comment Input */}
-          <div className="pt-3 pb-6 mt-auto border-t border-border z-10 w-full px-1">
+          <div className="py-3 mt-auto z-10 w-full px-1">
             <CommentInput
               currentUser={session}
               postAuthor={post.author.username}
+              postId={post.id}
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth/session";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { prisma } from "@/lib/db/prisma";
 import { postSchema } from "@/lib/validations/post.schema";
+import { FormState } from "@/types/auth";
 import { postState } from "@/types/post";
 import { revalidatePath } from "next/cache";
 
@@ -84,4 +85,39 @@ export const deletePost = async (postId: string) => {
   });
 
   revalidatePath("/feed");
+};
+
+export const createComment = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
+  const content = formData.get("content") as string;
+  const postId = formData.get("postId") as string;
+
+  try {
+    const session = await getSession();
+    if (!session) {
+      return { errors: { general: ["You must be logged in"] } };
+    }
+
+    if (!content || content.trim() === "") {
+      return { errors: { general: ["Comment cannot be empty"] } };
+    }
+
+    await prisma.comment.create({
+      data: {
+        content,
+        postId,
+        authorId: session.sub,
+      },
+    });
+
+    revalidatePath(`/thread/${postId}`);
+    revalidatePath("/feed");
+
+    return null;
+  } catch (error) {
+    console.error(error);
+    return { errors: { general: ["Failed to create comment"] } };
+  }
 };
