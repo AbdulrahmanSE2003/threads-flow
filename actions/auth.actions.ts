@@ -3,8 +3,12 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { comparePassword, hashPassword } from "@/lib/auth/password";
 import { clearSession, getSession, setSession } from "@/lib/auth/session";
-import { EditProfileSchema, LoginSchema, RegisterSchema } from "@/lib/validations/auth.schema";
-import { FormState } from "@/types/auth";
+import {
+  EditProfileSchema,
+  LoginSchema,
+  RegisterSchema,
+} from "@/lib/validations/auth.schema";
+import { FormState, BaseFormState } from "@/types/auth";
 
 export const registerAction = async (
   prevState: FormState,
@@ -20,8 +24,11 @@ export const registerAction = async (
   // Step 2: Server-side validation
   const result = RegisterSchema.safeParse(raw);
   if (!result.success) {
-    return { errors: result.error.flatten().fieldErrors };
+    return {
+      errors: result.error.flatten().fieldErrors as BaseFormState["errors"],
+    };
   }
+  let success = false;
 
   try {
     // Step 3: Check duplicates in DB
@@ -66,6 +73,7 @@ export const registerAction = async (
       displayName: user.displayName,
     };
     await setSession(sessionPayLoad);
+    success = true;
   } catch (error) {
     console.error(error);
     return {
@@ -74,10 +82,18 @@ export const registerAction = async (
   }
 
   // Step 7: Redirect
-  redirect("/feed");
+  if (success) {
+    redirect("/feed");
+  }
+
+  // Fallback return to satisfy the Promise<FormState> requirement
+  return null;
 };
 
-export const loginAction = async (prevState: FormState, formData: FormData) => {
+export const loginAction = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
   const raw = {
     email: formData.get("email"),
     password: formData.get("password"),
@@ -85,7 +101,7 @@ export const loginAction = async (prevState: FormState, formData: FormData) => {
 
   const result = LoginSchema.safeParse(raw);
   if (!result.success) {
-    return { errors: result.error.flatten().fieldErrors };
+    return { errors: result.error.flatten().fieldErrors as BaseFormState["errors"] };
   }
 
   try {
@@ -126,10 +142,10 @@ export const loginAction = async (prevState: FormState, formData: FormData) => {
   }
 
   redirect("/feed");
+  return null;
 };
 
 export const logoutAction = async () => {
   await clearSession();
   redirect("/login");
 };
-

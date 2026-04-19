@@ -67,7 +67,7 @@ const CommentInput = ({
           rows={1}
         />
         {state?.errors?.general && (
-          <p className="text-red-500 text-xs px-3">{state.errors.general}</p>
+          <p className="text-red-500 text-xs px-3">{state?.errors?.general[0]}</p>
         )}
         <div className="flex justify-end items-center mt-3">
           <button

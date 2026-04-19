@@ -5,7 +5,7 @@ import Avatar from "./ui/Avatar";
 import { Textarea } from "./ui/Textarea";
 import UserName from "./ui/UserName";
 import { useActionState, useState, useRef, useEffect } from "react";
-import { postState } from "@/types/post";
+import { postState, BasePostState } from "@/types/post";
 import { postSchema } from "@/lib/validations/post.schema";
 import { createPost } from "@/actions/post.actions";
 import Image from "next/image";
@@ -67,12 +67,15 @@ const CreatePost = ({ username, onClose }: CreatePostProps) => {
 
     if (!result.success) {
       return {
-        errors: result.error.flatten().fieldErrors,
+        errors: result.error.flatten().fieldErrors as BasePostState["errors"],
       };
     }
 
-    await createPost(prevState, formData);
-    onClose();
+    const res = await createPost(prevState, formData);
+    if (!res || !res.errors) {
+      onClose();
+    }
+    return res;
   };
 
   const [state, formAction, isPending] = useActionState(handleSubmit, null);
@@ -102,7 +105,7 @@ const CreatePost = ({ username, onClose }: CreatePostProps) => {
 
         {state?.errors?.caption && (
           <p className="text-red-500 dark:text-red-400 text-xs">
-            {state.errors.caption[0]}
+            {state?.errors?.caption?.[0]}
           </p>
         )}
 
@@ -151,7 +154,7 @@ const CreatePost = ({ username, onClose }: CreatePostProps) => {
 
           {state?.errors?.images && (
             <p className="text-red-500 dark:text-red-400 text-xs">
-              {state.errors.images[0]}
+              {state?.errors?.images?.[0]}
             </p>
           )}
 

@@ -36,6 +36,16 @@ const nextConfig: NextConfig = {
         hostname: "robohash.org",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
 };

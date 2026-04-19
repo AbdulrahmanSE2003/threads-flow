@@ -4,7 +4,7 @@ import { editProfile } from "@/actions/profile.actions";
 import Input from "@/app/_components/Input";
 import { Label } from "@/components/ui/label"; // If using shadcn/ui, otherwise use <label>
 import { EditProfileSchema } from "@/lib/validations/auth.schema";
-import { FormState } from "@/types/auth";
+import { FormState, BaseFormState } from "@/types/auth";
 import { useActionState } from "react";
 
 interface EditModalProps {
@@ -26,15 +26,15 @@ export const EditModal = ({ initialData, onClose }: EditModalProps) => {
 
     if (!result.success) {
       return {
-        errors: result.error.flatten().fieldErrors,
+        errors: result.error.flatten().fieldErrors as BaseFormState["errors"],
       };
     }
 
-    if (result.success) {
+    const res = await editProfile(prevState, formData);
+    if (!res || !res.errors) {
       onClose();
     }
-
-    return editProfile(prevState, formData);
+    return res;
   };
 
   const [state, formAction, isPending] = useActionState(handleSubmit, null);
@@ -59,7 +59,7 @@ export const EditModal = ({ initialData, onClose }: EditModalProps) => {
         />
         {state?.errors?.displayName && (
           <p className="text-red-500 dark:text-red-400 text-xs">
-            {state.errors.displayName[0]}
+            {state?.errors?.displayName?.[0]}
           </p>
         )}
       </div>
@@ -84,7 +84,7 @@ export const EditModal = ({ initialData, onClose }: EditModalProps) => {
         />
         {state?.errors?.bio && (
           <p className="text-red-500 dark:text-red-400 text-xs">
-            {state.errors.bio[0]}
+            {state?.errors?.bio?.[0]}
           </p>
         )}
       </div>

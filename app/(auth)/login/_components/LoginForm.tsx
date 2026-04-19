@@ -3,23 +3,26 @@
 import Input from "@/app/_components/Input";
 import Link from "next/link";
 import { useActionState } from "react";
-import { FormState } from "@/types/auth";
+import { FormState, BaseFormState } from "@/types/auth";
 import { LoginSchema } from "@/lib/validations/auth.schema";
 import { loginAction } from "@/actions/auth.actions";
 
 const LoginForm = () => {
-  const handleSubmit = async (prevState: FormState, formData: FormData) => {
+  const handleSubmit = async (
+    prevState: FormState,
+    formData: FormData,
+  ): Promise<FormState> => {
     // Extracting data
     const raw = {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
     };
 
     // Validating client side
     const result = LoginSchema.safeParse(raw);
     if (!result.success) {
       return {
-        errors: result.error.flatten().fieldErrors,
+        errors: result.error.flatten().fieldErrors as BaseFormState["errors"],
       };
     }
 
@@ -43,7 +46,7 @@ const LoginForm = () => {
       />
       {state?.errors?.email && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.email[0]}
+          {state?.errors?.email?.[0]}
         </p>
       )}
 
@@ -56,14 +59,14 @@ const LoginForm = () => {
       />
       {state?.errors?.password && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.password[0]}
+          {state?.errors?.password?.[0]}
         </p>
       )}
 
       {state?.errors?.general && (
         <div className="w-3/5 bg-red-500/10 border border-red-500/50 px-4 py-3 rounded-xl">
           <p className="text-red-600 dark:text-red-400 text-sm font-medium">
-            {state.errors.general[0]}
+            {state?.errors?.general?.[0]}
           </p>
         </div>
       )}

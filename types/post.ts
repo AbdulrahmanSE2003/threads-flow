@@ -20,18 +20,23 @@ export type UserWithCount = Prisma.UserGetPayload<{
 
 export type FollowerPreview = {
   follower: {
+    id: string;
     avatarUrl: string | null;
     username: string;
+    displayName: string;
   };
+  isFollowing: boolean;
 };
 
-export type postState = {
+export type BasePostState = {
   errors?: {
     caption?: string[];
     images?: string[];
     general?: string[];
   };
-} | null | void;
+};
+
+export type postState = BasePostState | null | void;
 
 export type CommentWithAuthor = Prisma.CommentGetPayload<{
   include: {

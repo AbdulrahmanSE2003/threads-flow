@@ -1,10 +1,13 @@
-export type FormState = {
+export type BaseFormState = {
   errors?: {
     displayName?: string[];
     username?: string[];
     email?: string[];
     password?: string[];
-    general?: string[];
     bio?: string[];
+    general?: string[];
   };
-} | null | void;
+  success?: boolean;
+};
+
+export type FormState = BaseFormState | null;

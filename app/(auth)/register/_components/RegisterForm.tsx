@@ -5,22 +5,25 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { registerAction } from "@/actions/auth.actions";
 import { RegisterSchema } from "@/lib/validations/auth.schema";
-import { FormState } from "@/types/auth";
+import { FormState, BaseFormState } from "@/types/auth";
 
 const RegisterForm = () => {
-  const handleSubmit = async (prevState: FormState, formData: FormData) => {
+  const handleSubmit = async (
+    prevState: FormState,
+    formData: FormData,
+  ): Promise<FormState> => {
     const raw = {
-      displayName: formData.get("displayName"),
-      username: formData.get("username"),
-      email: formData.get("email"),
-      password: formData.get("password"),
+      displayName: formData.get("displayName") as string,
+      username: formData.get("username") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
     };
 
     const result = RegisterSchema.safeParse(raw);
 
     if (!result.success) {
       return {
-        errors: result.error.flatten().fieldErrors,
+        errors: result.error.flatten().fieldErrors as BaseFormState["errors"],
       };
     }
 
@@ -43,7 +46,7 @@ const RegisterForm = () => {
       />
       {state?.errors?.displayName && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.displayName[0]}
+          {state?.errors?.displayName?.[0]}
         </p>
       )}
 
@@ -56,7 +59,7 @@ const RegisterForm = () => {
       />
       {state?.errors?.username && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.username[0]}
+          {state?.errors?.username?.[0]}
         </p>
       )}
 
@@ -69,7 +72,7 @@ const RegisterForm = () => {
       />
       {state?.errors?.email && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.email[0]}
+          {state?.errors?.email?.[0]}
         </p>
       )}
 
@@ -82,14 +85,14 @@ const RegisterForm = () => {
       />
       {state?.errors?.password && (
         <p className="text-red-500 dark:text-red-400 text-xs">
-          {state.errors.password[0]}
+          {state?.errors?.password?.[0]}
         </p>
       )}
 
       {state?.errors?.general && (
         <div className="w-3/5 bg-red-500/10 border border-red-500/50 px-4 py-3 rounded-xl">
           <p className="text-red-600 dark:text-red-400 text-sm font-medium">
-            {state.errors.general[0]}
+            {state?.errors?.general?.[0]}
           </p>
         </div>
       )}

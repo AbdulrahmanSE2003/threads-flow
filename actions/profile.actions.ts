@@ -7,7 +7,10 @@ import { EditProfileSchema } from "@/lib/validations/auth.schema";
 import { FormState } from "@/types/auth";
 import { revalidatePath } from "next/cache";
 
-export const editProfile = async (prevState: FormState, formData: FormData) => {
+export const editProfile = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
   const raw = {
     displayName: formData.get("displayName"),
     bio: formData.get("bio"),
@@ -39,6 +42,7 @@ export const editProfile = async (prevState: FormState, formData: FormData) => {
     return { success: true };
   } catch (error) {
     console.error(error);
+    return { errors: { general: ["Something went wrong"] } };
   }
 };
 

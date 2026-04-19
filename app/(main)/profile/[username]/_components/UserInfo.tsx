@@ -38,17 +38,29 @@ const UserInfo = async ({
     take: 20,
   });
 
-  const threeFollowers = await prisma.follow.findMany({
+  const allFollowers = await prisma.follow.findMany({
     where: {
       followingId: currentUser.id,
     },
     include: {
       follower: {
-        select: { avatarUrl: true, username: true },
+        select: { id: true, avatarUrl: true, username: true, displayName: true },
       },
     },
-    take: 3,
+    orderBy: { createdAt: "desc" },
   });
+
+  const currentUserFollowing = await prisma.follow.findMany({
+    where: { followerId: user?.sub as string },
+    select: { followingId: true },
+  });
+
+  const followingIds = new Set(currentUserFollowing.map((f) => f.followingId));
+
+  const followersWithStatus = allFollowers.map((f) => ({
+    ...f,
+    isFollowing: followingIds.has(f.follower.id),
+  }));
 
   const isFollowing = await prisma.follow.findUnique({
     where: {
@@ -73,9 +85,10 @@ const UserInfo = async ({
 
       {/* Followers Section (Threads Style) */}
       <FollowersSection
-        followers={threeFollowers}
+        followers={followersWithStatus as any}
         followerCounts={followerCounts}
         postsCount={postsCount}
+        currentUserId={user?.sub as string}
       />
 
       <UserActionBtn
