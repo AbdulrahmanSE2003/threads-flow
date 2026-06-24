@@ -24,7 +24,6 @@ const AddPost = ({
         className,
       )}
     >
-      {}
       <Avatar avatarSrc={imageSrc} />
       <input
         readOnly
@@ -45,6 +44,7 @@ const AddPost = ({
           <CreatePost
             onClose={() => setIsModalOpen(false)}
             username={username}
+            avatarUrl={imageSrc}
           />
         </Modal>
       )}

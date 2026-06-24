@@ -60,7 +60,7 @@ export default async function RootLayout({
       >
         <Providers>
           <Toaster richColors position="top-center" theme="system" />
-          {session && <Navbar username={session?.username ?? ""} />}
+          {session && <Navbar username={session?.username ?? ""} avatarUrl={session?.avatarUrl} />}
           <main className="relative flex flex-col min-h-screen items-center bg-background">
             {children}
           </main>

@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 import avatar from "@/public/avatar.png";
 import { cn } from "@/lib/utils";
@@ -12,23 +15,26 @@ const Avatar = ({
   size?: number;
   className?: string;
 }) => {
+  const [imgError, setImgError] = useState(false);
+
+  const src = imgError || !avatarSrc ? avatar : avatarSrc;
+
   return (
     <div className="flex flex-col items-center">
       <div
         className={cn(
-          "relative size-12 rounded-full overflow-hidden",
-          `size-${size / 4}`,
-          !avatarSrc && "scale-135",
+          "relative rounded-full overflow-hidden",
           className,
         )}
+        style={{ width: `${size}px`, height: `${size}px` }}
       >
         <Image
-          src={avatarSrc || avatar}
+          src={src}
           alt={"Threads user"}
           width={size}
           height={size}
-          style={{ height: `${size}px` }} // Overrides height: auto
           className="object-cover"
+          onError={() => setImgError(true)}
         />
       </div>
     </div>

@@ -18,7 +18,7 @@ const PostCarousel = ({ images }: { images: string[] }) => {
         {images?.map((img, index) => (
           <div
             key={index}
-            className="relative flex-none w-3/5 md:w-2/4 aspect-4/5 rounded-2xl overflow-hidden snap-start"
+            className="relative flex-none w-3/5 md:w-2/4 aspect-4/5 rounded-2xl overflow-hidden snap-start pointer-events-auto"
           >
             <Image
               onClick={() => handleClick(img)}

@@ -17,7 +17,7 @@ const navItems = [
   { icon: User2, path: "/profile" },
 ];
 
-const Navbar = ({ username }: { username: string }) => {
+const Navbar = ({ username, avatarUrl }: { username: string; avatarUrl?: string | null }) => {
   const pathname = usePathname();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,7 +84,7 @@ const Navbar = ({ username }: { username: string }) => {
       </DropdownMenu>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CreatePost onClose={() => setIsModalOpen(false)} username={username} />
+        <CreatePost onClose={() => setIsModalOpen(false)} username={username} avatarUrl={avatarUrl} />
       </Modal>
     </nav>
   );

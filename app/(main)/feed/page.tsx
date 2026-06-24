@@ -41,7 +41,7 @@ export default async function FeedPage() {
       </div>
 
       {/* Create post button */}
-      <AddPostButton username={currentUser?.username || ""} />
+      <AddPostButton username={currentUser?.username || ""} avatarUrl={currentUser?.avatarUrl} />
     </div>
   );
 }

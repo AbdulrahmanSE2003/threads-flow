@@ -77,7 +77,7 @@ const PostCard = ({ post, currentUser, className }: PostCardProps) => {
           </div>
 
           {/* Post Text */}
-          <p className="text-[15px] leading-relaxed text-neutral-900 dark:text-neutral-100 whitespace-pre-wrap">
+          <p className="text-[15px] leading-relaxed text-neutral-900 dark:text-neutral-100 whitespace-pre-wrap break-words">
             {caption}
           </p>
 

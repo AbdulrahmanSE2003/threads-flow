@@ -71,6 +71,7 @@ export const registerAction = async (
       sub: user.id,
       username: user.username,
       displayName: user.displayName,
+      avatarUrl: user.avatarUrl,
     };
     await setSession(sessionPayLoad);
     success = true;
@@ -132,6 +133,7 @@ export const loginAction = async (
       sub: user.id,
       username: user.username,
       displayName: user.displayName,
+      avatarUrl: user.avatarUrl,
     };
     await setSession(sessionPayLoad);
   } catch (error) {

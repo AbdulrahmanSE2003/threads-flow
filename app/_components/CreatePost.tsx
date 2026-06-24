@@ -12,10 +12,11 @@ import Image from "next/image";
 
 type CreatePostProps = {
   username: string;
+  avatarUrl?: string | null;
   onClose: () => void;
 };
 
-const CreatePost = ({ username, onClose }: CreatePostProps) => {
+const CreatePost = ({ username, avatarUrl, onClose }: CreatePostProps) => {
   const [caption, setCaption] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -86,7 +87,7 @@ const CreatePost = ({ username, onClose }: CreatePostProps) => {
 
   return (
     <div className="flex w-full gap-3 justify-start items-start">
-      <Avatar className="self-start mt-1" />
+      <Avatar avatarSrc={avatarUrl} className="self-start mt-1" />
       <form
         action={formAction}
         className="flex flex-col items-start w-full gap-2"

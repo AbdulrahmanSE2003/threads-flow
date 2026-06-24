@@ -56,7 +56,7 @@ export const changeProfilePhoto = async (file: File) => {
 
     // Upload image to cloudinary
     const url = await uploadToCloudinary(file);
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: userId,
       },
@@ -64,6 +64,8 @@ export const changeProfilePhoto = async (file: File) => {
         avatarUrl: url,
       },
     });
+
+    await setSession({ ...session, avatarUrl: updatedUser.avatarUrl });
 
     revalidatePath("/profile");
     revalidatePath(`/profile/${session.username}`);
@@ -85,9 +87,11 @@ export const removeProfilePhoto = async () => {
         id: userId,
       },
       data: {
-        avatarUrl: "",
+        avatarUrl: null,
       },
     });
+
+    await setSession({ ...session, avatarUrl: null });
 
     revalidatePath("/profile");
     revalidatePath(`/profile/${session.username}`);

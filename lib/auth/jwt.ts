@@ -6,6 +6,7 @@ export type JWTPayload = {
   sub: string;
   username: string;
   displayName: string;
+  avatarUrl?: string | null;
 };
 
 export async function signToken(payload: JWTPayload): Promise<string> {

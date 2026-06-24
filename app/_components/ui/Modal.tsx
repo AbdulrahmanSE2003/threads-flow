@@ -50,7 +50,7 @@ export function Modal({
   return (
     isOpen && (
       <div
-        className={`fixed inset-0 animate-in fade-in duration-300 bg-zinc-900/50 backdrop-blur-[2px] flex justify-center items-center z-9998`}
+        className={`fixed inset-0 animate-in fade-in duration-300 bg-zinc-900/50 backdrop-blur-[2px] flex justify-center items-center z-[9999]`}
       >
         <div
           ref={modalRef}
@@ -81,7 +81,7 @@ export function Modal({
             </div>
           )}
 
-          <div className={`p-4`}>{children}</div>
+          <div className={cn("flex-1", showImage ? "p-0 relative" : "p-4")}>{children}</div>
         </div>
       </div>
     )

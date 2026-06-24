@@ -12,13 +12,11 @@ const LoginForm = () => {
     prevState: FormState,
     formData: FormData,
   ): Promise<FormState> => {
-    // Extracting data
     const raw = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
 
-    // Validating client side
     const result = LoginSchema.safeParse(raw);
     if (!result.success) {
       return {
@@ -26,7 +24,6 @@ const LoginForm = () => {
       };
     }
 
-    // Login action
     return loginAction(prevState, formData);
   };
 
@@ -43,6 +40,7 @@ const LoginForm = () => {
         type="email"
         name="email"
         id="email"
+        defaultValue="guest@demo.com"
       />
       {state?.errors?.email && (
         <p className="text-red-500 dark:text-red-400 text-xs">
@@ -56,6 +54,7 @@ const LoginForm = () => {
         type="password"
         name="password"
         id="password"
+        defaultValue="guest1234"
       />
       {state?.errors?.password && (
         <p className="text-red-500 dark:text-red-400 text-xs">
@@ -70,6 +69,14 @@ const LoginForm = () => {
           </p>
         </div>
       )}
+
+      <div className="w-3/5 bg-emerald-500/10 border border-emerald-500/30 px-4 py-3 rounded-xl">
+        <p className="text-emerald-700 dark:text-emerald-300 text-xs text-center font-medium">
+          Demo app — using{" "}
+          <span className="font-mono font-bold">guest@demo.com</span> /{" "}
+          <span className="font-mono font-bold">guest1234</span>
+        </p>
+      </div>
 
       <button
         type="submit"
